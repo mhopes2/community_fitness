@@ -67,15 +67,22 @@ class User:
         query = "SELECT * FROM users WHERE email = %(email)s;"
         results = connectToMySQL(db).query_db(query,user)
         if len(user['first_name']) < 3:
-            flash("First name must be at least 3 characters.","register")
+            flash("First name must be at least 3 characters.","fullinfo")
             is_valid = False
         if len(user['last_name']) < 3:
-            flash("Last name must be at least 3 character","register")
+            flash("Last name must be at least 3 character","fullinfo")
             is_valid = False
         if len(results) >= 1:
-            flash("Email already taken","register")
+            flash("Email already taken","fullinfo")
             is_valid=False
         return is_valid
+
+
+
+
+
+
+
 
     @classmethod
     def save(cls, data):
@@ -85,7 +92,7 @@ class User:
 
     @classmethod
     def update(cls, data):
-        query = "INSERT INTO users (first_name, last_name, email, dob, ustreet, uapt, ucity, ustate, uzip) VALUES (%(first_name)s, %(last_name)s, %(email)s, %(dob)s, %(ustreet)s, %(uapt)s, %(ucity)s, %(ustate)s, %(uzip)s);"
+        query = "update users set first_name=%(first_name)s,last_name=%(last_name)s, email=%(email)s, dob=%(dob)s, ustreet=%(ustreet)s, uapt=%(uapt)s, ucity=%(ucity)s, ustate=%(ustate)s, uzip=%(uzip)s where id = %(id)s;"
         results = connectToMySQL(db).query_db(query, data)
         return results
 
@@ -115,7 +122,7 @@ class User:
 
     @classmethod
     def get_seller(cls,data):
-        query = "SELECT * FROM users LEFT JOIN cars on users.id = user_id WHERE cars.id = %(id)s;"
+        query = "SELECT * FROM users LEFT JOIN messages on users.id = user_id WHERE messages.id = %(id)s;"
         results = connectToMySQL(db).query_db(query,data)
         print(results)
         return cls(results[0])

@@ -1,8 +1,7 @@
 from flask_app import app
-from flask import render_template,redirect,request,session
+from flask import render_template,redirect,request,session,flash
 from flask_app.models.user import User
 from flask_app.models.message import Message
-
 
 @app.route('/add_message')
 def add_message():
@@ -19,7 +18,7 @@ def add_message():
 @app.route('/save/message',methods=['POST'])
 def save_message():
 
-    if not Message.validate_message(request.form):
+    if not Message.validate_addmessage(request.form):
         return redirect('/add_message')
 
     data = {
@@ -64,7 +63,7 @@ def update_message():
 
     print(data)
     Message.update(data)
-    return redirect('/dashboard')
+    return redirect('/success/')
 
 @app.route('/view/<int:id>')
 def view_message(id):
@@ -75,12 +74,13 @@ def view_message(id):
 
     message=Message.get_message(data)
 
-    return render_template('/show_message.html/', one_message = message, user = User.get_by_id(data))
+
+    return render_template('/show_message.html/', one_message = message, user = User.get_seller(data))
 
 @app.route('/delete/message/<int:id>')
 def del_message(id):
     data = {
         'id': id
     }
-    Message.delete(data)
-    return redirect('/dashboard')
+    Message.del_message(data)
+    return redirect('/success/')

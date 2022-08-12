@@ -3,11 +3,12 @@ from flask import render_template,redirect,request,session,flash
 from flask_app.models.user import User
 from flask_app.models.event import Event
 from flask_app.models.message import Message
-from flask_bcrypt import Bcrypt
-bcrypt = Bcrypt(app)
+import flask_bcrypt
+bcrypt = flask_bcrypt.Bcrypt(app)
 
 @app.route('/')
 def index():
+
     return render_template("index.html")
 
 @app.route('/register',methods=['POST'])
@@ -26,21 +27,12 @@ def register():
 
     session['id'] = id
     session['first_name'] = request.form['first_name']
-    return redirect('/success')
-
-@app.route('/dashboard')
-def dashboard():
-    if 'user_id' not in session:
-        return redirect('/logout')
-    user_data = {
-        'id': session['user_id']
-    }
-    return render_template('dashboard.html', user = User.get_by_id(user_data), events = Event.get_all_events(), messages = Message.get_all())
+    return redirect('/success/')
 
 @app.route('/update',methods=['POST'])
 def update():
-    if not User.validate_updateuser(request.form):
-        return redirect('/')
+    #if not User.validate_updateuser(request.form):
+        #return redirect('/')
 
     data ={ 
         "first_name": request.form['first_name'],
@@ -51,14 +43,14 @@ def update():
         "uapt": request.form['uapt'],
         "ucity": request.form['ucity'],
         "ustate": request.form['ustate'],
-        "uzip": request.form['uzip']
+        "uzip": request.form['uzip'],
     }
     
-    id = User.save(data)
+    id = User.update(data)
 
     session['id'] = id
     session['first_name'] = request.form['first_name']
-    return redirect('/success')
+    return redirect('/dashboard/')
 
 @app.route('/login',methods=['POST'])
 def login():
@@ -66,14 +58,16 @@ def login():
         return redirect('/')
 
     user = User.get_by_email(request.form)
+    hashpass = user.password
     if not user:
         flash("Invalid Email","login")
         return redirect('/')
-    if not bcrypt.check_password_hash(user.password, request.form['password']):
+    if not bcrypt.check_password_hash(hashpass, request.form['password']):
         flash("Invalid password","login")
         return redirect('/')
     session['id'] = user.id
-    return redirect('/dashboard')
+    session['first_name'] = user.first_name
+    return redirect('/dashboard/')
 
 @app.route('/success/')
 def success():
@@ -86,7 +80,12 @@ def success():
 
     return render_template("account_page.html", user=User.get_by_id(data))
 
-        # return render_template("dashboard.html", all_users=User.get_all_users())
+@app.route('/dashboard/')
+def dashboard():
+    if 'id' not in session:
+        return redirect('/logout')
+
+    return render_template("dashboard.html")
 
 @app.route('/logout')
 def logout():
