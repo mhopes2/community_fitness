@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <title>Create New Event</title>
+</head>
+<body>
+    <div class="main">
+        <div class="col-1">
+            <div>
+                <h1>Put Car Up For Sale</h1>
+                <a href="/dashboard" class="topLinks"><button class="linkbtn">Dashboard</button></a>
+                <a href="/logout" class="rightLink"><button class="linkbtn">Logout</button></a>
+            </div>
+            <form action="/new" method="POST">
+                {% with messages = get_flashed_messages(category_filter=['add_car'])%}
+                    {% if messages %}
+                    <div>
+                        <strong>Error!</strong>
+                        {% for message in messages %}
+                        <p>{{message}}</p>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                {% endwith %}
+                <div class="inputBox">
+                    <div class="input">
+                        <label for="price">Price:</label>
+                        <input type="number" name="price">
+                    </div>
+                    <div class="input">
+                        <label for="model">Model:</label>
+                        <input type="text" name="model">
+                    </div>
+                    <div class="input">
+                        <label for="make">Make:</label>
+                        <input type="text" name="make">
+                    </div>
+                    <div class="input">
+                        <label for="year">Year:</label>
+                        <input type="number" name="year">
+                    </div>
+                    <div class="input">
+                        <label for="description">Description:</label>
+                        <textarea name="description" cols="30" rows="5"></textarea>
+                    </div>
+                    <input type="submit" value="Add" class="linkbtn">
+                </div>
+            </form>
+        </div>
+</body>
+</html>

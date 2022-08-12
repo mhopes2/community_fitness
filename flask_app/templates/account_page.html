@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Community Fitness App Page</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="static/css/css.css">
+    </head>
+    <body>
+        <div class="oneline"><h1 style="margin: 0px;">Welcome to Community Fitness App</h1>
+            <h1 style="margin: 0px;">Please add the rest of your info below</h1>
+        </div>
+        <div class="box">
+            <h1>Full Information</h1>
+            <p><form action="/update" method="POST"></p>
+                <p><label for="first_name">Enter First Name:</label></p>
+                <p><input type="text" name="first_name" id="first_name" value={{user.first_name}}></p>
+                <p><label for="last_name">Enter Last Name:</label></p>
+                <p><input type="text" name="last_name" id="last_name" value={{user.last_name}}></p>
+                <p><label for="email">Enter Email:</label></p>
+                <p><input type="text" name="email" id="email" value={{user.email}}></p>
+                <p><label for="dob">Enter Date of Birth:</label></p>
+                <p><input type="date" name="dob" id="dob"></p>
+                <p><label for="ustreet">Enter Street:</label></p>
+                <p><input type="text" name="ustreet" id="ustreet"></p>
+                <p><label for="uapt"></label></p>
+                <p><input type="text" name="uapt" id="uapt"></p>
+                <p><label for="ucity">Enter City:</label></p>
+                <p><input type="text" name="ucity" id="ucity"></p>
+                <p><label for="ustate">Enter State:</label></p>
+                <p><input type="text" name="ustate" id="ustate"></p>
+                <p><label for="uzip">Enter Zip Code:</label></p>
+                <p><input type="text" name="uzip" id="uzip"></p>
+                <input class="submit" type="submit" value="Register">
+                    {% with messages = get_flashed_messages(category_filter=['fullinfo']) %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <p class="validation">{{message}}</p>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+            </form>
+        </div>
+    </body>
+</html>

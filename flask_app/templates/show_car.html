@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Community Fitness App Page</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/css.css') }}">
+    </head>
+    <body>
+        <div class="oneline" style="align-content: right; width: 850px;"><a href="/success/" style="margin-left: 500px;"><input class="submit" type="submit" value="Dashboard"></a><a href="/logout"><input class="submit" type="submit" value="Logout"></a>
+        </div>
+        <div class="box" style = "border-style: solid; border-width: 2px;  border-color: black;">
+            <p><label>${{one_car.price}}</label></p>
+            <p><label>Model: {{one_car.model}}</label></p>
+            <p><label>Make: {{one_car.make}}</label></p>
+            <p><label>Year: {{one_car.year}}</label></p>
+            <p><label>Description:</label></p>
+            <p><label>{{one_car.description}}</label></p>
+            <p><label style="font-size: x-large;">Seller: {{user.first_name}} {{user.last_name}}</label><a href="/delete/car/{{one_car.id}}" style="margin-left: 25px;"><input class="submit" type="submit" value="Purchase"></p>
+        </div>
+    </body>
+</html>

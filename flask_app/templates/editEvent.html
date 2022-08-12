@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Community Fitness App Page</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/css.css') }}">
+    </head>
+    <body>
+        <div class="oneline"><h1 style="margin: 0px; margin-right: 300px;">Edit {{one_car.model}}</h1><a href="/success/"><input class="submit" type="submit" value="Dashboard"></a><a href="/logout"><input class="submit" type="submit" value="Logout"></a>
+        </div>
+        <div class="box">
+            <p><form action="/update/car" method="POST"></p>
+                {% with messages = get_flashed_messages(category_filter=['caradd']) %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <p class="validation">{{message}}</p>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                <p><label for="price">Enter New Price:</label></p>
+                <p><input type="number" name="price" id="price" min="1" max="250000" value={{one_car.price}}></p>
+                <p><label for="model">Enter Model:</label></p>
+                <p><input type="text" name="model" id="model" value={{one_car.model}}></p>
+                <p><label for="make">Enter Make:</label></p>
+                <p><input type="text" name="make" id="make" value={{one_car.make}}></p>
+                <p><label for="year">Enter Year:</label></p>
+                <p><input type="number" name="year" id="year" min="1888" max="2022" value={{one_car.year}}></p>
+                <p><label for="description">Enter Description:</label></p>
+                <p><textarea name="description" id="description" cols="30" rows="5"> {{one_car.description}}</textarea></p>
+                <input type="hidden" name="id" value={{one_car.id}}>
+                <input class="submit" type="submit" value="Update">
+            </form>
+        </div>
+    </body>
+</html>
