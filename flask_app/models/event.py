@@ -26,14 +26,12 @@ class Event:
 
     @classmethod
     def get_all_events(cls):
-        query = "SELECT * FROM events LEFT JOIN users on user_id = users.id;"
+        query = "SELECT * FROM events;"
         results = connectToMySQL(db).query_db(query)
         print(results)
         events = []
         for row in results:
-            temp_event = cls(row)
-            temp_event.users = User(row)
-            events.append(temp_event)
+            events.append( cls(row) )
         print(events)
         return events
 

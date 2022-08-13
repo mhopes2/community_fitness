@@ -9,8 +9,13 @@
         <link rel="stylesheet" href="static/css/css.css">
     </head>
     <body>
-        <div class="oneline"><h1 style="margin: 0px;">Welcome to Community Fitness App</h1>
+        <div class="oneline">
+            <h1 style="margin: 0px;">Welcome to Community Fitness App</h1>
             <h1 style="margin: 0px;">Please add the rest of your info below</h1>
+            <div>
+                <a href="/dashboard">Home</a>
+                <a href="/logout">Logout</a>
+            </div>
         </div>
         <div class="box">
             <h1>Full Information</h1>
@@ -33,7 +38,7 @@
                 <p><input type="text" name="ustate" id="ustate"></p>
                 <p><label for="uzip">Enter Zip Code:</label></p>
                 <p><input type="text" name="uzip" id="uzip"></p>
-                <input class="submit" type="submit" value="Register">
+                <input type="submit" value="Update">
                     {% with messages = get_flashed_messages(category_filter=['fullinfo']) %}
                         {% if messages %}
                             {% for message in messages %}

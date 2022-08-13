@@ -1,137 +1,80 @@
-h1{
-    background-color: white;
-    padding: 2px;
-    text-align: center;
-    width: auto;
-    margin: 2px 75px 2px 75px;
-    border-radius: 2px;
+* {
+    margin: 0px auto;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-h2{
-    background-color: white;
-    padding: 2px;
-    text-align: left;
-    align-self: baseline;
-    width: auto;
-    margin: 2px 75px 2px 75px;
-    border-radius: 2px;
+.foreground {
+    background-color: cadetblue;
+    width: 1000px;
+    padding-bottom: 20px;
+    border: 2px solid black;
 }
 
-.oneline{
-    height: 60px;
-    padding: 5px;
-    margin: 0px;
-    width: 650px;
+.main {
     display: flex;
-    flex-direction: row;
-    justify-items: baseline;
-}
-
-.message{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    background-color: lightcoral;
-    border-radius: 2px;
-    padding: 5px;
-    border-color: black;
-    justify-self: center;
-    width: auto;
-    height: auto;
-}
-
-.justright{
-    display: flex;
-    justify-content: right;
-    align-content: center;
-}
-
-.column{
-    background-color: lightgreen;
-    flex-direction: column;
-}
-
-.clear{
-    background-color: white;
-    border-radius: 2px;
-    padding: 5px;
-    border-color: black;
-}
-
-.massive{
-    font-size: xx-large;
-}
-
-body{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    margin: 5px;
     justify-content: space-evenly;
-    width: 900px;
-    margin: 2px;
 }
 
-form{
-    display: flex;
-    flex-direction: column;
-}
-
-label{
-    background-color: white;
-    width: max-content;
-    margin-top: 2px;
-    margin-bottom: 2px;
-    border-radius: 2px;
-}
-
-.submit{
-    background-color: lightcyan;
-    margin-top: 10px;
-    margin-left: 10px;
+.col-1, .col-2 {
+    background-color: cadetblue;
     text-align: center;
-    height: 30px;
-    width: 75;
+    padding: 10px;
+    padding-bottom: 20px;
+    border: 2px solid black;
 }
 
-.submit_link{
-    margin-top: 10px;
-    margin-left: 10px;
+h1, h3 {
     text-align: center;
-    text-decoration-line: underline;
+    margin: 10px;
+    padding-top: 20px;
 }
 
-.validation{
-    color: black; 
+.input {
+    margin: 10px;
+    color: white;
+    font-size: larger;
 }
 
-.box{
-    margin: auto;
-    padding: 5px;
-    justify-self: center;
-    width: auto;
-    height: auto;  
+#btn-1 {
+    background-color: gold;
+    font-size: medium;
+    margin-top: 10px;
 }
 
-.bigbox{
-    background-color: mediumslateblue;
-    margin: auto;
-    padding: 5px;
-    justify-self: center;
-    width: 500px;
-    height: 500px;  
+.topLinks {
+    margin-left: 780px;
+    margin-bottom: 10px;
+}
+
+
+.showInfo {
+    border: 2px solid black;
+    width: 800px;
 }
 
 p {
-    color: black;
-    margin: 1px;
+    margin: 5px;
 }
 
-td, th {
-    text-align: left;
-    padding: 8px;
-    margin-left: 5px;
+table {
+    border-collapse: collapse;
 }
 
-.topLinks{
-    color: aqua;
+table td, th {
+    border: 2px solid black;
+    text-align: center;
+}
+
+.table {
+    padding-bottom: 20px;
+}
+
+.btn-2 {
+    margin-left: 15px;
+}
+
+.btm-link {
+    margin-top: 30px;
+    padding-bottom: 30px;
 }
