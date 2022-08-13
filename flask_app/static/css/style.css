@@ -47,6 +47,15 @@ h1, h3 {
     margin-bottom: 10px;
 }
 
+body{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    width: 900px;
+    margin: 2px;
+
+}
 
 .showInfo {
     border: 2px solid black;

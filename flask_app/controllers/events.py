@@ -93,3 +93,7 @@ def del_event(id):
     }
     Event.del_event(data)
     return redirect('/dashboard')
+
+@app.route('/event')
+def event():
+    return render_template('join_event.html')
