@@ -12,7 +12,7 @@ def add_event():
         "id":session['id']
     }
 
-    return render_template('newevent.html',user=User.get_by_id(data))
+    return render_template('createEvent.html',user=User.get_by_id(data))
 
 @app.route('/event/save',methods=['POST'])
 def save_event():
