@@ -69,13 +69,13 @@ def login():
     if not user:
         flash("Invalid Email","login")
         return redirect('/')
-    if not bcrypt.check_password_hash(user.password, request.form['password']):
+    elif not bcrypt.check_password_hash(user.password, request.form['password']):
         flash("Invalid password","login")
         return redirect('/')
     session['id'] = user.id
     return redirect('/dashboard')
 
-@app.route('/success/')
+@app.route('/success')
 def success():
     if 'id' not in session:
         return redirect('/logout')

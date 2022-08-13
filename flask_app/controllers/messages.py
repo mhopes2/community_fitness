@@ -14,7 +14,7 @@ def add_message():
         "id":session['id']
     }
 
-    return render_template('newmessage.html',user=User.get_by_id(data))
+    return render_template('create_message.html',user=User.get_by_id(data))
 
 @app.route('/save/message',methods=['POST'])
 def save_message():
@@ -32,7 +32,7 @@ def save_message():
     }
     print(data)
     Message.save(data)
-    return redirect('/success/')
+    return redirect('/dashboard')
 
 
 @app.route('/edit/message/<int:id>')
@@ -66,7 +66,7 @@ def update_message():
     Message.update(data)
     return redirect('/dashboard')
 
-@app.route('/view/<int:id>')
+@app.route('/view/message/<int:id>')
 def view_message(id):
 
     data = {

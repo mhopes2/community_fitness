@@ -69,6 +69,54 @@
                 </div> 
                 <div id="button">
                     <input type="submit" value="Create" id="linkbtn">
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                {% endwith %} -->
+            <form action="/new" method="POST">
+                <div class="inputBox">
+                    <div class="input">
+                        <label for="title">Event Title:</label>
+                        <input type="text" name="title">
+                    </div>
+                    <div class="input">
+                        <label for="event_date">Event Date:</label>
+                        <input type="date" name="event_date">
+                    </div>
+                    <div class="input">
+                        <label for="duration">Event Start Time:</label>
+                        <input type="time" name="start_time">
+                        <label for="duration">Event End Time:</label>
+                        <input type="time" name="end_time">
+                    </div>
+                    <div class="input">
+                        <label for="number"># of people attending</label>
+                        <select name="attendance" id="attendance">
+                            <option value="num">1</option>
+                            <option value="num">2</option>
+                            <option value="num">3</option>
+                            <option value="num">4</option>
+                            <option value="num">5</option>
+                            <option value="num">6</option>
+                            <option value="num">7</option>
+                            <option value="num">8</option>
+                            <option value="num">9</option>
+                            <option value="num">10</option>
+                        </select>
+                    </div>
+                    <div class="input">
+                        <label for="location">Event Location:</label>
+                        <input type="text" name="street" id="street"><br>
+                        <label for="apt">Address 2:</label>
+                        <input type="text" name="apt" id="apt"><br>
+                        <label for="city">City:</label>
+                        <input type="text" name="city" id="city"><br>
+                        <label for="state">State:</label>
+                        <input type="text" name="state" id="state"><br>
+                        <label for="zip">Zip code:</label>
+                        <input type="text" name="zip" id="zip">
+                    </div>
+                    <input type="submit" value="Create" class="linkbtn">
                 </div>
             </form>
         </div>
