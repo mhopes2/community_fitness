@@ -1,0 +1,40 @@
+#nav{
+    display: flex;
+
+    align-items: center;
+    margin-left: 400px;
+    justify-content: flex-end;
+    gap: 20px;
+}
+
+#content{
+    margin-left: 300px;
+}
+a{
+    text-decoration: none;
+    color: rgb(237, 237, 242);
+    font-size: 20px;
+}
+
+#linkbtn{
+    background-color: #406941;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    font-size: 16px;
+    margin: 4px 2px;
+    margin-left: 200px;
+}
+img{
+    width: 1000px;
+    height: 300px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+body{
+    background-color: grey;
+    
+}

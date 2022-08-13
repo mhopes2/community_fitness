@@ -1,38 +1,77 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Community Fitness App Page</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/css.css') }}">
-    </head>
-    <body>
-        <div class="oneline"><h1 style="margin: 0px; margin-right: 300px;">Edit {{one_car.model}}</h1><a href="/success/"><input class="submit" type="submit" value="Dashboard"></a><a href="/logout"><input class="submit" type="submit" value="Logout"></a>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/style2.css') }}">
+    <title>Edit Event</title>
+</head>
+<body>
+    <div id="container">
+        <div id="nav">
+            <a href="/dashboard" class="topLinks">Home</a>
+            <a href="/success/" class="topLinks">Account</a>
+            <a href="/logout" class="rightLink">Logout</a>
         </div>
-        <div class="box">
-            <p><form action="/update/car" method="POST"></p>
-                {% with messages = get_flashed_messages(category_filter=['caradd']) %}
-                    {% if messages %}
-                        {% for message in messages %}
-                            <p class="validation">{{message}}</p>
-                        {% endfor %}
-                    {% endif %}
-                {% endwith %}
-                <p><label for="price">Enter New Price:</label></p>
-                <p><input type="number" name="price" id="price" min="1" max="250000" value={{one_car.price}}></p>
-                <p><label for="model">Enter Model:</label></p>
-                <p><input type="text" name="model" id="model" value={{one_car.model}}></p>
-                <p><label for="make">Enter Make:</label></p>
-                <p><input type="text" name="make" id="make" value={{one_car.make}}></p>
-                <p><label for="year">Enter Year:</label></p>
-                <p><input type="number" name="year" id="year" min="1888" max="2022" value={{one_car.year}}></p>
-                <p><label for="description">Enter Description:</label></p>
-                <p><textarea name="description" id="description" cols="30" rows="5"> {{one_car.description}}</textarea></p>
-                <input type="hidden" name="id" value={{one_car.id}}>
-                <input class="submit" type="submit" value="Update">
+        <h1>Edit Event</h1>
+        <div class="col-1">
+            {% with messages = get_flashed_messages(category_filter=['event'])%}
+                {% if messages %}
+                <strong>Error!</strong>
+                    {% for message in messages %}       
+                        <p>{{message}}</p>
+                    {% endfor %}
+                {% endif %}
+        {% endwith %}
+        </div>
+        <div id="wrapper">
+            <form action="'/event/edit/" method="POST">
+                <label for="title">Event Title:</label>
+                <input type="text" name="name" class="input_tag"><br>
+                <div id="text_area">
+                    <label for="description">Description:</label>
+                    <textarea name="description" id="description" cols="30" rows="5"></textarea><br>
+                </div>
+                <label for="event_date">Event Date:</label>
+                <input type="date" name="date" id="date"><br>
+                <label for="duration">Event Start Time:</label>
+                <input type="time" name="time" class="time"><br>
+                <label for="duration">Event End Time:</label>
+                <input type="time" name="duration" class="time"><br>
+                <div id="select_tag">
+                    <label for="number">Num of people attending</label>
+                    <select name="attendance" id="attendance">
+                        <option value="num">Select</option>
+                        <option value="num">1</option>
+                        <option value="num">2</option>
+                        <option value="num">3</option>
+                        <option value="num">4</option>
+                        <option value="num">5</option>
+                        <option value="num">6</option>
+                        <option value="num">7</option>
+                        <option value="num">8</option>
+                        <option value="num">9</option>
+                        <option value="num">10</option>
+                    </select>
+                </div>    
+                <div id="loc">   
+                    <label for="location">Event Location:</label>
+                    <input type="text" name="street" class="input_tag"><br>
+                    <label for="apt">apt/unit/suite:</label>
+                    <input type="text" name="apt" class="input_tag3"><br>
+                    <label for="city">City:</label>
+                    <input type="text" name="city" class="input_tag4"><br>
+                    <label for="state">State:</label>
+                    <input type="text" name="state" class="input_tag1"><br>
+                    <label for="zip">Zip code:</label>
+                    <input type="text" name="zip" class="input_tag2">
+                </div> 
+                <div id="button">
+                    <input type="submit" value="Submit" id="linkbtn">
+                </div>
             </form>
         </div>
-    </body>
+    </div>    
+</body>
 </html>
