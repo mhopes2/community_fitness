@@ -54,7 +54,13 @@ body{
     justify-content: space-evenly;
     width: 900px;
     margin: 2px;
+    
+}
 
+#wrapper2{
+    background-image: url('/static/img/fitness3.png');
+    background-size: 2000px 1000px;
+    background-repeat: no-repeat; 
 }
 
 .showInfo {

@@ -30,10 +30,10 @@ def register():
 
 @app.route('/dashboard')
 def dashboard():
-    if 'user_id' not in session:
+    if 'id' not in session:
         return redirect('/logout')
     user_data = {
-        'id': session['user_id']
+        'id': session['id']
     }
     return render_template('dashboard.html', user = User.get_by_id(user_data), events = Event.get_all_events(), messages = Message.get_all())
 

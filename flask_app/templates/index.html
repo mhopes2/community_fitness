@@ -8,20 +8,48 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/style.css') }}">
     </head>
-    <body>
-        <h1 style="margin: 0px;">Welcome to Community Fitness App</h1>
-        <div class="main">
-            <div class="col-1">
-                <h1>Registration</h1>
-                <form action="/register" method="POST">
-                    <div class="input">
-                        <label for="first_name">First Name:</label>
-                        <input type="text" name="first_name" id="first_name">
-                    </div>
-                    <div class="input">
-                        <label for="last_name">Last Name:</label>
-                        <input type="text" name="last_name" id="last_name">
-                    </div>
+    <body id="wrapper2">
+        <div id="wrapper1">
+            <h1 style="margin: 0px;">Welcome to Community Fitness App</h1>
+            <div class="main">
+                <div class="col-1">
+                    <h1>Registration</h1>
+                    <form action="/register" method="POST">
+                        <div class="input">
+                            <label for="first_name">First Name:</label>
+                            <input type="text" name="first_name" id="first_name">
+                        </div>
+                        <div class="input">
+                            <label for="last_name">Last Name:</label>
+                            <input type="text" name="last_name" id="last_name">
+                        </div>
+                        <div class="input">
+                            <label for="email">Email:</label>
+                            <input type="text" name="email" id="email">
+                        </div>
+                        <div class="input">
+                            <label for="password">Password:</label>
+                            <input type="password" name="password" id="password">
+                        </div>
+                        <div class="input">
+                            <label for="conf_pass">Confirm password:</label>
+                            <input type="password" name="conf_pass" id="conf_pass">
+                        </div>
+                        <input type="submit" value="Register" id = "btn-1">
+                            {% with messages = get_flashed_messages(category_filter=['register']) %}
+                                {% if messages %}
+                                <div>
+                                    {% for message in messages %}
+                                        <p class="validation">{{message}}</p>
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            {% endwith %}
+                    </form>
+                </div>
+                <div class="col-2">
+                    <h1>Login</h1>
+                    <form action="/login" method="POST">
                     <div class="input">
                         <label for="email">Email:</label>
                         <input type="text" name="email" id="email">
@@ -30,12 +58,8 @@
                         <label for="password">Password:</label>
                         <input type="password" name="password" id="password">
                     </div>
-                    <div class="input">
-                        <label for="conf_pass">Confirm password:</label>
-                        <input type="password" name="conf_pass" id="conf_pass">
-                    </div>
-                    <input type="submit" value="Register" id = "btn-1">
-                        {% with messages = get_flashed_messages(category_filter=['register']) %}
+                    <input class="submit" type="submit" value="Login" id="btn-1">
+                        {% with messages = get_flashed_messages(category_filter=['login']) %}
                             {% if messages %}
                             <div>
                                 {% for message in messages %}
@@ -44,31 +68,9 @@
                             </div>
                             {% endif %}
                         {% endwith %}
-                </form>
-            </div>
-            <div class="col-2">
-                <h1>Login</h1>
-                <form action="/login" method="POST">
-                <div class="input">
-                    <label for="email">Email:</label>
-                    <input type="text" name="email" id="email">
+                    </form>
                 </div>
-                <div class="input">
-                    <label for="password">Password:</label>
-                    <input type="password" name="password" id="password">
-                </div>
-                <input class="submit" type="submit" value="Login" id="btn-1">
-                    {% with messages = get_flashed_messages(category_filter=['login']) %}
-                        {% if messages %}
-                        <div>
-                            {% for message in messages %}
-                                <p class="validation">{{message}}</p>
-                            {% endfor %}
-                        </div>
-                        {% endif %}
-                    {% endwith %}
-                </form>
             </div>
-        </div>
+        </div>    
     </body>
 </html>
