@@ -6,17 +6,15 @@
         <title>Community Fitness App Page</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="static/css/css.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='/css/style4.css') }}">
     </head>
-    <body>
-        <div class="oneline">
-            <h1 style="margin: 0px;">Welcome to Community Fitness App</h1>
-            <h1 style="margin: 0px;">Please add the rest of your info below</h1>
-            <div>
-                <a href="/dashboard">Home</a>
-                <a href="/logout">Logout</a>
-            </div>
+    <body id="account_body">
+        <div id="nav2">
+            <a class="a_tag"href="/dashboard" >Home</a>
+            <a class="a_tag" href="/logout">Logout</a>
         </div>
+        <h1 style="margin: 0px;">Welcome to Community Fitness App</h1>
+        <h3 style="margin: 0px;">Please add the rest of your info below</h3>
         <div class="box">
             <h1>Full Information</h1>
             <p><form action="/update" method="POST"></p>
@@ -38,7 +36,7 @@
                 <p><input type="text" name="ustate" id="ustate"></p>
                 <p><label for="uzip">Enter Zip Code:</label></p>
                 <p><input type="text" name="uzip" id="uzip"></p>
-                <input type="submit" value="Update">
+                <input id="linkbtn" type="submit" value="Update">
                     {% with messages = get_flashed_messages(category_filter=['fullinfo']) %}
                         {% if messages %}
                             {% for message in messages %}
