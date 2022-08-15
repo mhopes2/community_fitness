@@ -33,9 +33,9 @@ def dashboard():
     if 'id' not in session:
         return redirect('/logout')
     user_data = {
-        'id': session['id']
+        'id': session['user_id']
     }
-    return render_template('dashboard.html', user = User.get_by_id(user_data), events = Event.get_all_events(), messages = Message.get_all())
+    return render_template('dashboard.html', user = User.get_by_id(user_data), events = Event.get_all_events(), messages = Message.get_all(user_data))
 
 @app.route('/update',methods=['POST'])
 def update():

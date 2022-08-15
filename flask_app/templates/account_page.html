@@ -10,33 +10,32 @@
     </head>
     <body>
         <div class="oneline">
-            <h1 style="margin: 0px;">Welcome to Community Fitness App</h1>
-            <h1 style="margin: 0px;">Please add the rest of your info below</h1>
+            <h1 style="margin: 0px;">Account Information</h1>
             <div>
                 <a href="/dashboard">Home</a>
                 <a href="/logout">Logout</a>
             </div>
         </div>
         <div class="box">
-            <h1>Full Information</h1>
             <p><form action="/update" method="POST"></p>
-                <p><label for="first_name">Enter First Name:</label></p>
+                <p><label for="first_name">First Name:</label></p>
                 <p><input type="text" name="first_name" id="first_name" value={{user.first_name}}></p>
-                <p><label for="last_name">Enter Last Name:</label></p>
+                <p><label for="last_name">Last Name:</label></p>
                 <p><input type="text" name="last_name" id="last_name" value={{user.last_name}}></p>
-                <p><label for="email">Enter Email:</label></p>
+                <p><label for="email">Email Address:</label></p>
                 <p><input type="text" name="email" id="email" value={{user.email}}></p>
-                <p><label for="dob">Enter Date of Birth:</label></p>
+                <p><label for="dob">Date of Birth:</label></p>
                 <p><input type="date" name="dob" id="dob"></p>
-                <p><label for="ustreet">Enter Street:</label></p>
+                <p>Address:</p>
+                <p><label for="ustreet">Street:</label></p>
                 <p><input type="text" name="ustreet" id="ustreet"></p>
                 <p><label for="uapt"></label></p>
                 <p><input type="text" name="uapt" id="uapt"></p>
-                <p><label for="ucity">Enter City:</label></p>
+                <p><label for="ucity">City:</label></p>
                 <p><input type="text" name="ucity" id="ucity"></p>
-                <p><label for="ustate">Enter State:</label></p>
+                <p><label for="ustate">State:</label></p>
                 <p><input type="text" name="ustate" id="ustate"></p>
-                <p><label for="uzip">Enter Zip Code:</label></p>
+                <p><label for="uzip">Zip Code:</label></p>
                 <p><input type="text" name="uzip" id="uzip"></p>
                 <input type="submit" value="Update">
                     {% with messages = get_flashed_messages(category_filter=['fullinfo']) %}
