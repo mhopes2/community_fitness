@@ -18,15 +18,13 @@ class Message:
         self.users_id = data['users_id']
 
     @classmethod
-    def get_all( cls ):
-        query = "SELECT * FROM messages JOIN users ON users.id = messages.users_id;"
-        results = connectToMySQL(db).query_db(query)
+    def get_all( cls, data ):
+        query = "SELECT users.first_name as from_name, users2.first_name as to_name, messages.* FROM users LEFT JOIN messages ON users.id = messages.from_id LEFT JOIN users as users2 ON users2.id = messages.to_id WHERE users2.id =  %(id)s;"
+        results = connectToMySQL(db).query_db(query, data)
         print(results)
         messages = []
-        for row_from_db in results:
-                message = cls(row_from_db)
-                message.users = User(row_from_db)
-                messages.append(message)
+        for message in results:
+                messages.append( cls(message) )
         return messages
 
     @classmethod
@@ -38,18 +36,13 @@ class Message:
 
     @classmethod
     def save(cls, data):
-        query = "INSERT INTO messages (message, model, make, year, description, user_id) VALUES (%(price)s, %(model)s, %(make)s, %(year)s, %(description)s, %(user_id)s);"
+        query = "INSERT INTO messages (message,from_id,to_id) VALUES (%(message)s,%(from_id)s,%(to_id)s);"
         results = connectToMySQL(db).query_db(query, data)
         return results
 
     @classmethod
-    def update(cls, data):
-        query = "UPDATE messages SET price=%(price)s, model=%(model)s, make=%(make)s, year=%(year)s, description=%(description)s WHERE id = %(id)s;"
-        return connectToMySQL(db).query_db(query,data)
-
-    @classmethod
     def delete(cls, data):
-        query = "DELETE from messages WHERE id = %(id)s;"
+        query = "DELETE from messages WHERE messages.id = %(id)s;"
         result = connectToMySQL(db).query_db(query, data)
         return result
 
