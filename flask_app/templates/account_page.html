@@ -6,7 +6,7 @@
         <title>Community Fitness App Page</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="static/css/css.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='/css/style4.css') }}">
     </head>
     <body>
         <div class="oneline">
@@ -37,7 +37,7 @@
                 <p><input type="text" name="ustate" id="ustate"></p>
                 <p><label for="uzip">Zip Code:</label></p>
                 <p><input type="text" name="uzip" id="uzip"></p>
-                <input type="submit" value="Update">
+                <input id="linkbtn" type="submit" value="Update">
                     {% with messages = get_flashed_messages(category_filter=['fullinfo']) %}
                         {% if messages %}
                             {% for message in messages %}
