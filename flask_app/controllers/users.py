@@ -8,7 +8,8 @@ bcrypt = Bcrypt(app)
 
 @app.route('/')
 def index():
-    return render_template("index.html")
+    users = User.get_all()
+    return render_template("index.html", users = users)
 
 @app.route('/register',methods=['POST'])
 def register():
@@ -22,15 +23,17 @@ def register():
         "password": bcrypt.generate_password_hash(request.form['password'])
     }
     
-    id = User.save(data)
+    user_info = User.save(data)
 
-    session['id'] = id
+    session['user_id'] = user_info
     session['first_name'] = request.form['first_name']
-    return redirect('/success')
+
+    user_route_id = str(session['user_id'])
+    return redirect('/success/'+ user_route_id)
 
 @app.route('/dashboard')
 def dashboard():
-    if 'id' not in session:
+    if 'user_id' not in session:
         return redirect('/logout')
     user_data = {
         'id': session['user_id']
@@ -39,26 +42,23 @@ def dashboard():
 
 @app.route('/update',methods=['POST'])
 def update():
-    if not User.validate_updateuser(request.form):
-        return redirect('/')
 
-    data ={ 
-        "first_name": request.form['first_name'],
-        "last_name": request.form['last_name'],
-        "email": request.form['email'],
-        "dob": request.form['dob'],
-        "ustreet": request.form['ustreet'],
-        "uapt": request.form['uapt'],
-        "ucity": request.form['ucity'],
-        "ustate": request.form['ustate'],
-        "uzip": request.form['uzip']
-    }
+    # data ={ 
+    #     "user_id": user_id,
+    #     "first_name": request.form['first_name'],
+    #     "last_name": request.form['last_name'],
+    #     "email": request.form['email'],
+    #     "dob": request.form['dob'],
+    #     "ustreet": request.form['ustreet'],
+    #     "uapt": request.form['uapt'],
+    #     "ucity": request.form['ucity'],
+    #     "ustate": request.form['ustate'],
+    #     "uzip": request.form['uzip']
+    # }
     
-    id = User.save(data)
-
-    session['id'] = id
-    session['first_name'] = request.form['first_name']
-    return redirect('/success')
+    User.update(request.form)
+    user_session = session['user_id']
+    return redirect ('/success/'+ str(user_session))
 
 @app.route('/login',methods=['POST'])
 def login():
@@ -72,19 +72,17 @@ def login():
     elif not bcrypt.check_password_hash(user.password, request.form['password']):
         flash("Invalid password","login")
         return redirect('/')
-    session['id'] = user.id
+    session['user_id'] = user.id
     return redirect('/dashboard')
 
-@app.route('/success')
-def success():
-    if 'id' not in session:
-        return redirect('/logout')
-
+@app.route('/success/<int:user_id>')
+def edit(user_id):
     data = {
-        'id': session['id']
+        "id": user_id
     }
+    #user = User.get_by_id({'user_id': user_id})
 
-    return render_template("account_page.html", user=User.get_by_id(data))
+    return render_template("account_page.html", user = User.get_by_id(data))
 
         # return render_template("dashboard.html", all_users=User.get_all_users())
 
