@@ -7,11 +7,12 @@ db = "eventmanager"
 class Event:
     def __init__( self , data ):
         self.id = data['id']
-        self.name = data['name']
+        self.title = data['title']
+        self.description = data['description']
         self.date = data['date']
-        self.time = data['time']
-        self.duration = data['duration']
-        self.location = data['location']
+        self.start_time= data['start_time']
+        self.end_time = data['end_time']
+        self.num_of_pple = data['num_of_pple']
         self.street = data['street']
         self.apt = data['apt']
         self.city = data['city']
@@ -20,8 +21,9 @@ class Event:
         self.description = data['description']
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
-        self.users_id = data['users_id']
-        self.users = None
+        self.user_id = data['user_id']
+        self.user = None
+        self.users_signedup_event = []
 
 
     @classmethod
@@ -31,9 +33,10 @@ class Event:
         print(results)
         events = []
         for row in results:
-            events.append( cls(row) )
+            events.append( cls(row))
         print(events)
         return events
+
 
     @classmethod
     def get_event(cls, data):
@@ -44,14 +47,29 @@ class Event:
 
     @classmethod
     def save(cls, data):
-        query = "INSERT INTO events (name, date, time, duration, location, street, city, state, zip, description, user_id) VALUES (%(name)s, %(date)s, %(time)s, %(duration)s, %(location)s, %(street)s, %(city)s, %(state)s, %(zip)s, %(description)s %(user_id)s);"
+        query = "INSERT INTO events (title, description, date, start_time, end_time, num_of_pple, street, apt, city, state, zip, user_id) VALUES (%(title)s, %(description)s, %(date)s, %(start_time)s, %(end_time)s,%(num_of_pple)s, %(street)s,%(apt)s, %(city)s, %(state)s, %(zip)s, %(user_id)s);"
         results = connectToMySQL(db).query_db(query, data)
         return results
 
     @classmethod
     def update(cls, data):
-        query = "UPDATE events SET name=%(name)s, date=%(date)s, time=%(time)s, duration=%(duration)s, location=%(location)s, street=%(street)s, city=%(city)s, state=%(state)s, zip=%(zip)s, description=%(description)s WHERE id = %(id)s;"
+        query = "UPDATE events SET title=%(title)s, description=%(description)s, date=%(date)s, start_time=%(start_time)s, end_time=%(end_time)s, num_of_pple=%(num_of_pple)s, street=%(street)s,apt=%(apt)s, city=%(city)s, state=%(state)s, zip=%(zip)s WHERE id = %(id)s;"
         return connectToMySQL(db).query_db(query,data)
+
+    @classmethod
+    def attending_event(cls,data):
+        query = "INSERT INTO signedUp_event (user_id,event_id) VALUES (%(user_id)s,%(event_id)s);"
+        return connectToMySQL(db).query_db(query,data)
+    
+    @classmethod
+    def event_not_yet_joined(cls,data):
+        query = "SELECT * FROM events where events.user_id !=%(id)s;" 
+        results = connectToMySQL(db).query_db(query, data)
+        events = []
+        for row in results:
+            events.append(cls(row))
+        print(events)
+        return events
 
     @classmethod
     def del_event(cls, data):
@@ -61,7 +79,7 @@ class Event:
 
     @classmethod
     def get_event_with_users( cls , data ):
-        query = "SELECT * FROM events JOIN users ON users.id = events.users_id WHERE events.id = %(id)s;"
+        query = "SELECT * FROM events JOIN users ON users.id = user_id WHERE events.id = %(id)s;"
         results = connectToMySQL(db).query_db(query, data)
         print(results)
         if results:
@@ -89,26 +107,25 @@ class Event:
     @staticmethod
     def validate_event(event):
         is_valid = True
-        query = "SELECT * FROM events WHERE id = %(id)s;"
-        results = connectToMySQL(db).query_db(query,event)
-        if len(results) >= 1:
-            flash("Event already exists", "eventadd")
-        if (event['name']) == "":
-            flash("Event name must be at least 3 characters.","eventadd")
+        if (event['title']) == "":
+            flash("Event title must be at least 3 characters.","eventadd")
             is_valid = False
-        if (event['date']) == "":
+        if (event['description']) == "":
+            flash("Add some info please.","eventadd")
+            is_valid = False
+        if (event['start_time']) == "":
             flash("Input make,  must be at least 3 characters.","eventadd")
             is_valid = False
-        if (event['time']) == "":
-            flash("Input make,  must be at least 3 characters.","eventadd")
-            is_valid = False
-        if len(event['duration']) < 1:
+        if len(event['end_time']) < 1:
             flash("Duration must be longer than 30 minutes","eventadd")
             is_valid = False
-        if (event['location']) == "":
-            flash("Input make,  must be at least 3 characters.","eventadd")
+        if len(event['num_of_pple']) < 0:
+            flash("Num should be greater than 0","eventadd")
             is_valid = False
         if (event['street']) == "":
+            flash("Input make,  must be at least 3 characters.","eventadd")
+            is_valid = False
+        if (event['apt']) == "":
             flash("Input make,  must be at least 3 characters.","eventadd")
             is_valid = False
         if (event['city']) == "":
@@ -119,8 +136,5 @@ class Event:
             is_valid = False
         if len(event['zip']) < 5:
             flash("Please input proper zip code","eventadd")
-            is_valid = False
-        if (event['description']) == "":
-            flash("Add some info please.","eventadd")
             is_valid = False
         return is_valid

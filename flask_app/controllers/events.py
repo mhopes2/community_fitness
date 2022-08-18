@@ -2,6 +2,7 @@ from flask_app import app
 from flask import render_template,redirect,request,session,flash
 from flask_app.models.user import User
 from flask_app.models.event import Event
+import pprint
 
 @app.route('/add_event')
 def add_event():
@@ -16,24 +17,28 @@ def add_event():
 
 @app.route('/event/save',methods=['POST'])
 def save_event():
+    if 'id' not in session:
+        return redirect('/logout')
     if not Event.validate_event(request.form):
         return redirect('/add_event')
 
     data = {
-        "name": request.form['name'],
-        "date": request.form['date'],
-        "time": request.form['time'],
-        "duration": request.form['duration'],
-        "location": request.form['location'],
-        "street": request.form['street'],
-        "city": request.form['city'],
-        "state": request.form['state'],
-        "zip": request.form['zip'],
-        "description": request.form['description'],
-        "users_id": session['id']
+        "title": request.form["title"],
+        "description": request.form["description"],
+        "date": request.form["date"],
+        "start_time": request.form["start_time"],
+        "end_time": request.form["end_time"],
+        "num_of_pple": request.form["num_of_pple"],
+        "street": request.form["street"],
+        "apt": request.form["apt"],
+        "city": request.form["city"],
+        "state": request.form["state"],
+        "zip": request.form["zip"],
+        "user_id": session["id"]
     }
     print(data)
-    Event.save(data)
+    events = Event.save(data)
+    print(events)
     return redirect('/dashboard')
 
 
@@ -71,18 +76,21 @@ def update_event():
     Event.update(data)
     return redirect('/dashboard')
 
-@app.route('/event/view/<int:id>')
-def view_event(id):
+@app.route('/view/event/<int:event_id>')
+def view_event(event_id):
     if 'id' not in session:
         return redirect('/logout')
-    data = {
-        'id': id
+    user_data = {
+        'id': session['id']
     }
-
-    event=Event.get_event(data)
-
-
-    return render_template('/show_event.html/', one_event = event, user = User.get_by_id(data))
+    event_data = {
+        'id': event_id
+    }
+    event = Event.get_event_with_users(event_data)
+    user = User.get_by_id(user_data)
+    print(event)
+    print(user)
+    return render_template('join_event.html', event = event ,user = user )
 
 @app.route('/event/delete/<int:id>')
 def del_event(id):
@@ -94,6 +102,11 @@ def del_event(id):
     Event.del_event(data)
     return redirect('/dashboard')
 
-@app.route('/event')
-def event():
-    return render_template('join_event.html')
+@app.route('/join/event', method =["post"])
+def join_event():
+    data = {
+        "user_id": request.form['user_id'],
+        "event_id": request.form['event_id']
+    }
+    Event.attending_event(data)
+    return redirect('/dashboard')

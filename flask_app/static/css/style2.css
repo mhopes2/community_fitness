@@ -5,11 +5,11 @@
 }
 *{
     margin-left: 10px;
-    margin-left: 30px;
+    margin-left: 55px;
 }
 body{
     background-image: url('/static/img/fitness4.png');
-    background-size: 2000px 1000px;
+    background-size: 2000px 2000px;
     background-repeat: no-repeat;
 }
 #container{
@@ -62,7 +62,7 @@ label, input{
 
 a{
     text-decoration: none;
-    color: blue;
+    color: white;
     font-size: 20px;
 }
 
@@ -79,4 +79,14 @@ a{
 }
 label, h1{
     color: white;
+    font-weight: 1800px;
+}
+
+p{
+    color: white;
+}
+
+strong{
+    color: red;
+    font-size: 60px;
 }
