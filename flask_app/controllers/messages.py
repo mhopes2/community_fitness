@@ -18,7 +18,9 @@ def add_message():
 
 @app.route('/save/message',methods=['POST'])
 def save_message():
-
+    if 'usr_id' not in session:
+        return redirect('/')
+        
     if not Message.validate_message(request.form):
         return redirect('/add_message')
 
@@ -28,42 +30,9 @@ def save_message():
         "from_name": request.form['from_name'],
         "to_id": request.form['to_id'],
         "to_name": request.form['to_name'],
-        "user_id": session['id']
     }
     print(data)
     Message.save(data)
-    return redirect('/dashboard')
-
-
-@app.route('/edit/message/<int:id>')
-def edit_message(id):
-
-    if 'id' not in session:
-        return redirect('/logout')
-
-    data = {
-        "id": id
-    }
-    
-    return render_template("editmessage.html",one_message=Message.get_message(data))
-
-@app.route('/update/message/', methods=['POST'])   
-def update_message():
-
-    if not Message.validate_addmessage(request.form):
-        return redirect(f'/edit/message/{request.form["id"]}')
-
-    data = {
-        "message": request.form['message'],
-        "from_id": request.form['from_id'],
-        "from_name": request.form['from_name'],
-        "to_id": request.form['to_id'],
-        "to_name": request.form['to_name'],
-        "id": request.form['id']
-    }
-
-    print(data)
-    Message.update(data)
     return redirect('/dashboard')
 
 @app.route('/view/message/<int:id>')

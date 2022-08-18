@@ -11,7 +11,7 @@
     <div>
         <div>
             <h1>Welcome {{user.first_name}}</h1>
-            <a href="/success">Account</a>|
+            <a href="/success/{{ user.id }}">Account</a>|
             <a href="/logout">Logout</a>
         </div>
         <div class="left-col">
@@ -31,13 +31,14 @@
             </div>
             <div>
                 <h3>Messages</h3>
-                <p> # messages (unread)</p>
+                <p>{{messages|length}} messages (unread)</p>
                 <table>
                     {% for message in messages %}
-                    <tr>{{ message.description }}</tr>
-                    <tr><img src="img/deleteicon.png" alt="trashbin"></tr>
+                    <tr>{{ message.message }}</tr>
+                    <tr>- <a href="/delete/message/{"></a><img src="img/deleteicon.png" alt="trashbin"></tr>
                     {% endfor %}
                 </table>
+                <button><a href="/add_message">+ New Message</a></button>
             </div>
         </div>
         <div>

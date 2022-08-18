@@ -7,7 +7,7 @@ import pprint
 
 @app.route('/add_event')
 def add_event():
-    if 'id' not in session:
+    if 'user_id' not in session:
         return redirect('/logout')
 
     data = {
@@ -18,7 +18,7 @@ def add_event():
 
 @app.route('/event/save',methods=['POST'])
 def save_event():
-    if 'id' not in session:
+    if 'user_id' not in session:
         return redirect('/logout')
     if not Event.validate_event(request.form):
         return redirect('/add_event')
@@ -43,18 +43,18 @@ def save_event():
     return redirect('/dashboard')
 
 
-@app.route('/event/edit/<int:id>')
-def edit_event(id):
-    if 'id' not in session:
+@app.route('/event/edit/<int:user_id>')
+def edit_event(user_id):
+    if 'user_id' not in session:
         return redirect('/logout')
 
     data = {
-        "id": id
+        "id": user_id
     }
     
     return render_template("editevent.html",one_event=Event.get_event(data))
 
-@app.route('/event/update/<int:id>', methods=['POST'])   
+@app.route('/event/update/<int:user_id>', methods=['POST'])   
 def update_event():
     if not Event.validate_event(request.form):
         return redirect(f'/event/edit/{request.form["id"]}')
@@ -82,7 +82,7 @@ def view_event(event_id):
     if 'id' not in session:
         return redirect('/logout')
     user_data = {
-        'id': session['id']
+        'id': session['user_id']
     }
     event_data = {
         'id': event_id
@@ -93,17 +93,17 @@ def view_event(event_id):
     print(user)
     return render_template('join_event.html', event = event ,user = user )
 
-@app.route('/event/delete/<int:id>')
-def del_event(id):
-    if 'id' not in session:
+@app.route('/event/delete/<int:user_id>')
+def del_event(user_id):
+    if 'user_id' not in session:
         return redirect('/logout')
     data = {
-        'id': id
+        'id': user_id
     }
     Event.del_event(data)
     return redirect('/dashboard')
 
-@app.route('/join/event', methods =["post"])
+@app.route('/join/event', methods =["POST"])
 def join_event():
     data = {
         "user_id": session['user_id'],
