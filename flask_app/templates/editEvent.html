@@ -16,7 +16,7 @@
         </div>
         <h1>Edit Event</h1>
         <div class="col-1">
-            {% with messages = get_flashed_messages(category_filter=['event'])%}
+            {% with messages = get_flashed_messages(category_filter=['eventadd'])%}
                 {% if messages %}
                 <strong>Error!</strong>
                     {% for message in messages %}       

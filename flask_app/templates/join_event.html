@@ -16,13 +16,15 @@
         </div>
         <img src="{{ url_for('static', filename='/img/fitness.png') }}">
         <div id="content">
-            <h1>Title</h1>
-            <form action="/show_event">
-                <p><label>Description</label></p>
-                <p><label>Date:</label></p>
-                <p><label>time: </label></p>
-                <p><label>Location: </label></p>
-                <p><label>Posted By:</label></p>
+            <h1>Title  {{event.title}}</h1>
+            <form action="/join/event" method ="POST">
+                <label for="description">Description   {{event.description}}</label>
+                <label for="date">Date:   {{event.date.strftime('%m-%d-%Y')}}</label>
+                <label for="start_time">Start time: {{event.start_time}}</label>
+                <label for="end_time">End time: {{event.end_time}}</label>
+                <label for="num_of_peope">Num of people: {{event.num_of_pple}}</label>
+                <label>Location: {{event.street}} {{event.apt}} {{event.city}} {{event.state}} {{event.zip}}</label>
+                <label for="user_id">Posted By:{{event.user.last_name}}</label>
                 <div id="button">
                     <input type="submit" value="Join" id="linkbtn">
                 </div>
