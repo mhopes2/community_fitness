@@ -1,3 +1,4 @@
+from crypt import methods
 from flask_app import app
 from flask import render_template,redirect,request,session,flash
 from flask_app.models.user import User
@@ -105,7 +106,7 @@ def del_event(user_id):
 @app.route('/join/event', methods =["POST"])
 def join_event():
     data = {
-        "user_id": request.form['user_id'],
+        "user_id": session['user_id'],
         "event_id": request.form['event_id']
     }
     Event.attending_event(data)
