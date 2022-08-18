@@ -1,3 +1,4 @@
+from crypt import methods
 from flask_app import app
 from flask import render_template,redirect,request,session,flash
 from flask_app.models.user import User
@@ -10,7 +11,7 @@ def add_event():
         return redirect('/logout')
 
     data = {
-        "id":session['id']
+        "id":session['user_id']
     }
 
     return render_template('createEvent.html',user=User.get_by_id(data))
@@ -102,10 +103,10 @@ def del_event(id):
     Event.del_event(data)
     return redirect('/dashboard')
 
-@app.route('/join/event', method =["post"])
+@app.route('/join/event', methods =["post"])
 def join_event():
     data = {
-        "user_id": request.form['user_id'],
+        "user_id": session['user_id'],
         "event_id": request.form['event_id']
     }
     Event.attending_event(data)
