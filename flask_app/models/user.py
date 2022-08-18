@@ -85,7 +85,7 @@ class User:
 
     @classmethod
     def update(cls, data):
-        query = "INSERT INTO users (first_name, last_name, email, dob, ustreet, uapt, ucity, ustate, uzip) VALUES (%(first_name)s, %(last_name)s, %(email)s, %(dob)s, %(ustreet)s, %(uapt)s, %(ucity)s, %(ustate)s, %(uzip)s);"
+        query = "UPDATE users SET first_name=%(first_name)s,last_name=%(last_name)s, email=%(email)s, dob=%(dob)s, ustreet=%(ustreet)s, uapt=%(uapt)s, ucity=%(ucity)s, ustate=%(ustate)s, uzip=%(uzip)s where id = %(user_id)s;"
         results = connectToMySQL(db).query_db(query, data)
         return results
 
@@ -108,14 +108,7 @@ class User:
 
     @classmethod
     def get_by_id(cls,data):
-        query = "SELECT * FROM users WHERE id = %(id)s;"
-        results = connectToMySQL(db).query_db(query,data)
-        print(results)
-        return cls(results[0])
-
-    @classmethod
-    def get_seller(cls,data):
-        query = "SELECT * FROM users LEFT JOIN cars on users.id = user_id WHERE cars.id = %(id)s;"
+        query = "SELECT * FROM users WHERE id = %(user_id)s;"
         results = connectToMySQL(db).query_db(query,data)
         print(results)
         return cls(results[0])
