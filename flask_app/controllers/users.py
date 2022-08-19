@@ -43,22 +43,24 @@ def dashboard():
 @app.route('/update',methods=['POST'])
 def update():
 
-    # data ={ 
-    #     "user_id": user_id,
-    #     "first_name": request.form['first_name'],
-    #     "last_name": request.form['last_name'],
-    #     "email": request.form['email'],
-    #     "dob": request.form['dob'],
-    #     "ustreet": request.form['ustreet'],
-    #     "uapt": request.form['uapt'],
-    #     "ucity": request.form['ucity'],
-    #     "ustate": request.form['ustate'],
-    #     "uzip": request.form['uzip']
-    # }
+    data ={
+        "first_name": request.form['first_name'],
+        "last_name": request.form['last_name'],
+        "email": request.form['email'],
+        "dob": request.form['dob'],
+        "ustreet": request.form['ustreet'],
+        "uapt": request.form['uapt'],
+        "ucity": request.form['ucity'],
+        "ustate": request.form['ustate'],
+        "uzip": request.form['uzip'],
+    }
     
-    User.update(request.form)
-    user_session = session['user_id']
-    return redirect ('/success/'+ str(user_session))
+    user_id = User.update(data)
+    print(user_id)
+
+    session['id'] = user_id
+    session['first_name'] = request.form['first_name']
+    return redirect('/dashboard')
 
 @app.route('/login',methods=['POST'])
 def login():
