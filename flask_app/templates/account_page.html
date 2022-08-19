@@ -17,26 +17,44 @@
             </div>
         </div>
         <div class="box">
-            <p><form action="/update" method="POST"></p>
-                <p><label for="first_name">First Name:</label></p>
-                <p><input type="text" name="first_name" id="first_name" value={{user.first_name}}></p>
-                <p><label for="last_name">Last Name:</label></p>
-                <p><input type="text" name="last_name" id="last_name" value={{user.last_name}}></p>
-                <p><label for="email">Email Address:</label></p>
-                <p><input type="text" name="email" id="email" value={{user.email}}></p>
-                <p><label for="dob">Date of Birth:</label></p>
-                <p><input type="date" name="dob" id="dob"></p>
+            <form action="/update/{{ user.id }}" method="POST">
+                <div>
+                    <label for="first_name">First Name:</label>
+                    <input type="text" name="first_name" id="first_name" value={{user.first_name}}>
+                </div>
+                <div>
+                    <label for="last_name">Last Name:</label>
+                    <input type="text" name="last_name" id="last_name" value="{{user.last_name}}">
+                </div>
+                <div>
+                    <label for="email">Email Address:</label>
+                    <input type="text" name="email" id="email" value="{{user.email}}">
+                </div>
+                <div>
+                    <label for="dob">Date of Birth:</label>
+                    <input type="date" name="dob" id="dob" value = "{{user.dob}}">
+                </div>
                 <p>Address:</p>
-                <p><label for="ustreet">Street:</label></p>
-                <p><input type="text" name="ustreet" id="ustreet"></p>
-                <p><label for="uapt"></label></p>
-                <p><input type="text" name="uapt" id="uapt"></p>
-                <p><label for="ucity">City:</label></p>
-                <p><input type="text" name="ucity" id="ucity"></p>
-                <p><label for="ustate">State:</label></p>
-                <p><input type="text" name="ustate" id="ustate"></p>
-                <p><label for="uzip">Zip Code:</label></p>
-                <p><input type="text" name="uzip" id="uzip"></p>
+                <div>
+                    <label for="ustreet">Street:</label>
+                    <input type="text" name="ustreet" id="ustreet" value="{{user.ustreet}}">
+                </div>
+                <div>
+                    <label for="uapt"></label>
+                    <input type="text" name="uapt" id="uapt" value = "{{user.uapt}}">
+                </div>
+                <div>
+                    <label for="ucity">City:</label>
+                    <input type="text" name="ucity" id="ucity" value = "{{user.ucity}}">
+                </div>
+                <div>
+                    <label for="ustate">State:</label>
+                    <input type="text" name="ustate" id="ustate" value = "{{user.ustate}}">
+                </div>
+                <div>
+                    <label for="uzip">Zip Code:</label>
+                    <input type="text" name="uzip" id="uzip" value = "{{user.uzip}}">
+                </div>
                 <input id="linkbtn" type="submit" value="Update">
                     {% with messages = get_flashed_messages(category_filter=['fullinfo']) %}
                         {% if messages %}
