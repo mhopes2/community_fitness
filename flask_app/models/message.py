@@ -29,14 +29,14 @@ class Message:
 
     @classmethod
     def get_message(cls, data):
-        query = "SELECT * FROM cars LEFT JOIN users on user_id = users.id where cars.id = %(id)s;"
+        query = "SELECT * FROM messages LEFT JOIN users on to_id = users.id where messages.id = %(id)s;"
         results = connectToMySQL(db).query_db(query, data)
 
         return cls(results[0])
 
     @classmethod
     def save(cls, data):
-        query = "INSERT INTO messages (message,from_id,to_id) VALUES (%(message)s,%(from_id)s,%(to_id)s);"
+        query = "INSERT INTO messages (message, from_id, from_name, to_id, to_name, users_id) VALUES (%(message)s, %(from_id)s, %(from_name)s,%(to_id)s,%(to_name)s, %(from_id)s);"
         results = connectToMySQL(db).query_db(query, data)
         return results
 
@@ -51,19 +51,7 @@ class Message:
         is_valid = True
         query = "SELECT * FROM messages WHERE id = %(id)s;"
         results = connectToMySQL(db).query_db(query,message)
-        if (message['model']) == "":
-            flash("Input model,  must be at least 3 characters.","caradd")
-            is_valid = False
-        if (message['make']) == "":
-            flash("Input make,  must be at least 3 characters.","caradd")
-            is_valid = False
-        if (message['description']) == "":
-            flash("Add some info please.","caradd")
-            is_valid = False
-        if len(message['year']) < 4:
-            flash("Input proper year please.","caradd")
-            is_valid = False
-        if len(message['price']) < 1:
-            flash("Input at least a buck","caradd")
+        if len(message['message']) < 2:
+            flash("You will need a long message")
             is_valid = False
         return is_valid
