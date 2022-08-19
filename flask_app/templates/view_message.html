@@ -13,13 +13,20 @@
         <a href="logout">Logout</a>
     </div>
     <div>
-        <h3>From {{messages.from_name}}:</h3>
-        <p>{{messages.message}}</p>
+        <h3>From {{one_message.from_name}}:</h3>
+        <p>{{one_message.message}}</p>
     </div>
     <div>
-        <h3>Reply:</h3>
-        <p>{{messages.message}}</p>
+        <form action="/send/message" method="POST">
+            <input type="hidden" name="to_id" value={{one_message.from_id}}>
+            <input type="hidden" name="to_name" value={{one_message.from_name}}>
+            <input type="hidden" name="from_id" value={{session.user_id}}>
+            <input type="hidden" name="from_name" value={{one_message.to_name}}>
+            <h3>Reply:</h3>
+            <textarea class="form-control" name="message" id="message" cols="30" rows="3"></textarea>
+            <input type="submit" value="Send">
+        </form>
     </div>
-    <button><a href="">Send</a></button>
 </body>
 </html>
+

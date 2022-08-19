@@ -24,11 +24,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>{{ message.from_name }}</td>
-                        <td>{{ message.message }}</td>
-                        <td><a href="/view/message/{{ message.id }}">View</a> | <a href="/delete/message/{{ message.id }}">Delete</a></td>
-                    </tr>
+                    {% for message in all_messages %}
+                        <tr>
+                            <td>{{ message.from_name }}</td>
+                            <td>{{ message.message }}</td>
+                            <td><a href="/view/message/{{message.id}}">View</a> | <a href="/delete/message/{{message.id}}">Delete</a></td>
+                        </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>

@@ -35,9 +35,11 @@
                 <table>
                     {% for message in messages %}
                     <tr>{{ message.message }}</tr>
-                    <tr>- <a href="/delete/message/{"></a><img src="img/deleteicon.png" alt="trashbin"></tr>
+                    <tr>- <a href="/view/message/{{message.id}}">View</a></tr>
+                    <tr>- <a href="/delete/message/{{message.id}}">Delete</a><img src="img/deleteicon.png" alt="trashbin"></tr>
                     {% endfor %}
                 </table>
+                <button><a href="/view/messages/{{session.id}}">View all Messages</a></button>
                 <button><a href="/add_message">+ New Message</a></button>
             </div>
         </div>
