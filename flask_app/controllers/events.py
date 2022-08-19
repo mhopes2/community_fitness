@@ -35,7 +35,7 @@ def save_event():
         "city": request.form["city"],
         "state": request.form["state"],
         "zip": request.form["zip"],
-        "user_id": session["id"]
+        "user_id": session["user_id"]
     }
     print(data)
     events = Event.save(data)
@@ -54,7 +54,7 @@ def edit_event(user_id):
     
     return render_template("editevent.html",one_event=Event.get_event(data))
 
-@app.route('/event/update/<int:user_id>', methods=['POST'])   
+@app.route('/event/update/<int:event_id>', methods=['POST'])   
 def update_event():
     if not Event.validate_event(request.form):
         return redirect(f'/event/edit/{request.form["id"]}')
@@ -79,7 +79,7 @@ def update_event():
 
 @app.route('/view/event/<int:event_id>')
 def view_event(event_id):
-    if 'id' not in session:
+    if 'user_id' not in session:
         return redirect('/logout')
     user_data = {
         'id': session['user_id']
@@ -93,12 +93,12 @@ def view_event(event_id):
     print(user)
     return render_template('join_event.html', event = event ,user = user )
 
-@app.route('/event/delete/<int:user_id>')
-def del_event(user_id):
+@app.route('/event/delete/<int:event_id>')
+def del_event(event_id):
     if 'user_id' not in session:
         return redirect('/logout')
     data = {
-        'id': user_id
+        'id': event_id
     }
     Event.del_event(data)
     return redirect('/dashboard')

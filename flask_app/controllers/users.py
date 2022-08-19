@@ -40,23 +40,23 @@ def dashboard():
     }
     return render_template('dashboard.html', user = User.get_by_id(user_data), events = Event.get_all_events(), messages = Message.get_all(user_data))
 
-@app.route('/update',methods=['POST'])
-def update():
+@app.route('/update/<int:user_id>',methods=['POST'])
+def update(user_id):
 
-    # data ={ 
-    #     "user_id": user_id,
-    #     "first_name": request.form['first_name'],
-    #     "last_name": request.form['last_name'],
-    #     "email": request.form['email'],
-    #     "dob": request.form['dob'],
-    #     "ustreet": request.form['ustreet'],
-    #     "uapt": request.form['uapt'],
-    #     "ucity": request.form['ucity'],
-    #     "ustate": request.form['ustate'],
-    #     "uzip": request.form['uzip']
-    # }
+    data ={ 
+        "user_id": user_id,
+        "first_name": request.form['first_name'],
+        "last_name": request.form['last_name'],
+        "email": request.form['email'],
+        "dob": request.form['dob'],
+        "ustreet": request.form['ustreet'],
+        "uapt": request.form['uapt'],
+        "ucity": request.form['ucity'],
+        "ustate": request.form['ustate'],
+        "uzip": request.form['uzip']
+    }
     
-    User.update(request.form)
+    User.update(data)
     user_session = session['user_id']
     return redirect ('/success/'+ str(user_session))
 
