@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Community Fitness App Page</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/style3.css') }}">
+    </head>
+    <body>
+        <div id="nav">
+            <a href="/dashboard" class="topLinks">Home</a>
+            <a href="/success/" class="topLinks">Account</a>
+            <a href="/logout" class="rightLink">Logout</a>
+        </div>
+        <div id="content">
+            <h1>Title</h1>
+            <form action="/show_event">
+                <p><label>Description</label></p>
+                <p><label>Date:</label></p>
+                <p><label>time: </label></p>
+                <p><label>Location: </label></p>
+                <p><label>Posted By:</label></p>
+                <div id="button">
+                    <input type="submit" value="Cancel" id="linkbtn">
+                </div>
+            </form>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Message</title>
+</head>
+<body>
+    <div>
+        <div>
+            <h1>Create New Message</h1>
+            <a href="/dashboard">Home</a> |
+            <a href="/success">Account</a> |
+            <a href="/logout">Logout</a>
+        </div>
+        {% for u in users %}
+            {% if u.id != session.user_id %}
+            <form action="/save/message" method="POST">
+                <div>
+                    <input type="hidden" name="from_id" value={{session.user_id}}>
+                    <input type="hidden" name="to_id" value={{u.id}}>
+                    <label for="to_id">Message {{u.first_name}}:</label>
+                    <textarea class="form-control" name="content" id="" cols="30" rows="3"></textarea>
+                    <input type="submit" value="Send" class="btn btn-warning">
+                </div>
+            </form>
+            {% endif %}
+        {% endfor %}
+    </div>
+</body>
+</html>

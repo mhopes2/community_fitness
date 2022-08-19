@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Community Fitness App Page</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/style4.css') }}">
+    </head>
+    <body>
+        <div id="nav">
+            <a href="/dashboard" class="topLinks">Home</a>
+            <a href="/success/" class="topLinks">Account</a>
+            <a href="/logout" class="rightLink">Logout</a>
+        </div>
+        <img src="{{ url_for('static', filename='/img/fitness.png') }}">
+        <div id="content">
+            <h1>Title  {{event.title}}</h1>
+            <form action="/join/event" method ="POST">
+                <input type="hidden" name="event_id" value="{{event.id}}">
+                <label for="description">Description   {{event.description}}</label>
+                <label for="date">Date:   {{event.date.strftime('%m-%d-%Y')}}</label>
+                <label for="start_time">Start time: {{event.start_time}}</label>
+                <label for="end_time">End time: {{event.end_time}}</label>
+                <label for="num_of_peope">Num of people: {{event.num_of_pple}}</label>
+                <label>Location: {{event.street}} {{event.apt}} {{event.city}} {{event.state}} {{event.zip}}</label>
+                <label for="user_id">Posted By:{{event.user.last_name}}</label>
+                <div id="button">
+                    <input type="submit" value="Join" id="linkbtn">
+                </div>
+            </form>
+        </div>
+    </body>
+</html>

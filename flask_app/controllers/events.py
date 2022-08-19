@@ -1,54 +1,60 @@
+from crypt import methods
 from flask_app import app
 from flask import render_template,redirect,request,session,flash
 from flask_app.models.user import User
 from flask_app.models.event import Event
+import pprint
 
 @app.route('/add_event')
 def add_event():
-    if 'id' not in session:
+    if 'user_id' not in session:
         return redirect('/logout')
 
     data = {
-        "id":session['id']
+        "id":session['user_id']
     }
 
-    return render_template('newevent.html',user=User.get_by_id(data))
+    return render_template('createEvent.html',user=User.get_by_id(data))
 
 @app.route('/event/save',methods=['POST'])
 def save_event():
+    if 'user_id' not in session:
+        return redirect('/logout')
     if not Event.validate_event(request.form):
         return redirect('/add_event')
 
     data = {
-        "name": request.form['name'],
-        "date": request.form['date'],
-        "time": request.form['time'],
-        "duration": request.form['duration'],
-        "location": request.form['location'],
-        "street": request.form['street'],
-        "city": request.form['city'],
-        "state": request.form['state'],
-        "zip": request.form['zip'],
-        "description": request.form['description'],
-        "users_id": session['id']
+        "title": request.form["title"],
+        "description": request.form["description"],
+        "date": request.form["date"],
+        "start_time": request.form["start_time"],
+        "end_time": request.form["end_time"],
+        "num_of_pple": request.form["num_of_pple"],
+        "street": request.form["street"],
+        "apt": request.form["apt"],
+        "city": request.form["city"],
+        "state": request.form["state"],
+        "zip": request.form["zip"],
+        "user_id": session["id"]
     }
     print(data)
-    Event.save(data)
+    events = Event.save(data)
+    print(events)
     return redirect('/dashboard')
 
 
-@app.route('/event/edit/<int:id>')
-def edit_event(id):
-    if 'id' not in session:
+@app.route('/event/edit/<int:user_id>')
+def edit_event(user_id):
+    if 'user_id' not in session:
         return redirect('/logout')
 
     data = {
-        "id": id
+        "id": user_id
     }
     
     return render_template("editevent.html",one_event=Event.get_event(data))
 
-@app.route('/event/update/<int:id>', methods=['POST'])   
+@app.route('/event/update/<int:user_id>', methods=['POST'])   
 def update_event():
     if not Event.validate_event(request.form):
         return redirect(f'/event/edit/{request.form["id"]}')
@@ -71,25 +77,37 @@ def update_event():
     Event.update(data)
     return redirect('/dashboard')
 
-@app.route('/event/view/<int:id>')
-def view_event(id):
+@app.route('/view/event/<int:event_id>')
+def view_event(event_id):
     if 'id' not in session:
         return redirect('/logout')
-    data = {
-        'id': id
+    user_data = {
+        'id': session['user_id']
     }
+    event_data = {
+        'id': event_id
+    }
+    event = Event.get_event_with_users(event_data)
+    user = User.get_by_id(user_data)
+    print(event)
+    print(user)
+    return render_template('join_event.html', event = event ,user = user )
 
-    event=Event.get_event(data)
-
-
-    return render_template('/show_event.html/', one_event = event, user = User.get_by_id(data))
-
-@app.route('/event/delete/<int:id>')
-def del_event(id):
-    if 'id' not in session:
+@app.route('/event/delete/<int:user_id>')
+def del_event(user_id):
+    if 'user_id' not in session:
         return redirect('/logout')
     data = {
-        'id': id
+        'id': user_id
     }
     Event.del_event(data)
+    return redirect('/dashboard')
+
+@app.route('/join/event', methods =["POST"])
+def join_event():
+    data = {
+        "user_id": session['user_id'],
+        "event_id": request.form['event_id']
+    }
+    Event.attending_event(data)
     return redirect('/dashboard')

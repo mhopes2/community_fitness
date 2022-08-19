@@ -1,44 +1,71 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Community Fitness App Page</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    </head>
-    <body>
-        <div class="oneline"><h1 style="margin: 0px; margin-right: 100px;">Welcome to Car Dealz, {{session.first_name}}</h1><a href="/logout"><input class="submit" type="submit" value="Logout"></a>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Dashboard</title>
+</head>
+<body>
+    <div>
+        <div>
+            <h1>Welcome {{user.first_name}}</h1>
+            <a href="/success/{{ user.id }}">Account</a>|
+            <a href="/logout">Logout</a>
         </div>
-        <div class="box">
-            <h1 style="text-align:left">Cars for Sale</h1>
-            <table>
-                <thead>
+        <div class="left-col">
+            <div>
+                <h3>Events</h3>
+                <table>
+                    {% for event in events %}
                     <tr>
-                        <th>Model</th>
-                        <th>Year</th>
-                        <th>Seller</th>
-                        <th>Actions</th>
+                        <a href="/view/event/{{ event.id }}">{event.title}</a>
                     </tr>
-                </thead>
-                <tbody>
-                    {% for one_car in all_cars %}
-                        <tr>
-                            <td>{{one_car.model}}</td>
-                            <td>{{one_car.year}}</td>
-                            <td>{{one_car.seller.first_name}} {{one_car.seller.last_name}}</td>
-                            {% if one_car.user_id == session.id %}
-                                <td><a href="/edit/car/{{one_car.id}}"><input class="submit_link" type="submit" value="Edit"></td>
-                                <td><a href="/delete/car/{{one_car.id}}"><input class="submit_link" type="submit" value="Delete"></td>
-                            {% else %}
-                                <td><a href="/view/{{one_car.id}}"><input class="submit_link" type="submit" value="View"></td>
-                            {% endif %}
-                        </tr>
+                    <tr>
+                        <p># spots left</p>
+                    </tr>
                     {% endfor %}
-                </tbody>
-            </table>
-            <a href="/add_car"><input class="submit" type="submit" value="Add Car"></a>
+                </table>
+                <button><a href="/add_event">Create Event</a></button>
+            </div>
+            <div>
+                <h3>Messages</h3>
+                <p>{{messages|length}} messages (unread)</p>
+                <table>
+                    {% for message in messages %}
+                    <tr>{{ message.message }}</tr>
+                    <tr>- <a href="/delete/message/{"></a><img src="img/deleteicon.png" alt="trashbin"></tr>
+                    {% endfor %}
+                </table>
+                <button><a href="/add_message">+ New Message</a></button>
+            </div>
         </div>
-    </body>
+        <div>
+            <div>
+                <h2>My Schedule</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Date</th>
+                            <th>Location</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for event in events %}
+                        <tr>
+                            <td>{{ event.name }}</td>
+                            <td>{{ event.date }}</td>
+                            <td>{{ event.street }} {{ event.city }}, {{ event.state }} {{ event.zip }}</td>
+                            <td><a href="/view/{{ event.id }}">View |</a><a href="/update"></a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
 </html>

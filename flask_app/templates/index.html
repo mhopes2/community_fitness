@@ -6,50 +6,71 @@
         <title>Community Fitness App Page</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="static/css/css.css">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/style.css') }}">
     </head>
-    <body>
-        <div class="oneline"><h1 style="margin: 0px;">Welcome to Community Fitness App</h1>
-        </div>
-        <div class="box">
-            <h1>Registration</h1>
-            <p><form action="/register" method="POST"></p>
-                <p><label for="first_name">Enter First Name:</label></p>
-                <p><input type="text" name="first_name" id="first_name"></p>
-                <p><label for="last_name">Enter Last Name:</label></p>
-                <p><input type="text" name="last_name" id="last_name"></p>
-                <p><label for="email">Enter Email:</label></p>
-                <p><input type="text" name="email" id="email"></p>
-                <p><label for="password">Enter Password:</label></p>
-                <p><input type="password" name="password" id="password"></p>
-                <p><label for="conf_pass">Confirm password:</label></p>
-                <p><input type="password" name="conf_pass" id="conf_pass"></p>
-                <input class="submit" type="submit" value="Register">
-                    {% with messages = get_flashed_messages(category_filter=['register']) %}
-                        {% if messages %}
-                            {% for message in messages %}
-                                <p class="validation">{{message}}</p>
-                            {% endfor %}
-                        {% endif %}
-                    {% endwith %}
-            </form>
-        </div>
-        <div class="box">
-            <h1>Login</h1>
-            <form action="/login" method="POST">
-            <p><label for="email">Enter Email:</label></p>
-            <p><input type="text" name="email" id="email"></p>
-            <p><label for="password">Enter Password:</label></p>
-            <p><input type="password" name="password" id="password"></p>
-            <input class="submit" type="submit" value="Login">
-            {% with messages = get_flashed_messages(category_filter=['login']) %}
-                {% if messages %}
-                    {% for message in messages %}
-                        <p class="validation">{{message}}</p>
-                    {% endfor %}
-                {% endif %}
-            {% endwith %}
-            </form>
-        </div>
+    <body id="wrapper2">
+        <div id="wrapper1">
+            <h1 style="margin: 0px;">Welcome to Community Fitness App</h1>
+            <div class="main">
+                <div class="col-1">
+                    <h1>Registration</h1>
+                    <form action="/register" method="POST">
+                        <div class="input">
+                            <label for="first_name">First Name:</label>
+                            <input type="text" name="first_name" id="first_name">
+                        </div>
+                        <div class="input">
+                            <label for="last_name">Last Name:</label>
+                            <input type="text" name="last_name" id="last_name">
+                        </div>
+                        <div class="input">
+                            <label for="email">Email:</label>
+                            <input type="text" name="email" id="email">
+                        </div>
+                        <div class="input">
+                            <label for="password">Password:</label>
+                            <input type="password" name="password" id="password">
+                        </div>
+                        <div class="input">
+                            <label for="conf_pass">Confirm password:</label>
+                            <input type="password" name="conf_pass" id="conf_pass">
+                        </div>
+                        <input type="submit" value="Register" id = "btn-1">
+                            {% with messages = get_flashed_messages(category_filter=['register']) %}
+                                {% if messages %}
+                                <div>
+                                    {% for message in messages %}
+                                        <p class="validation">{{message}}</p>
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            {% endwith %}
+                    </form>
+                </div>
+                <div class="col-2">
+                    <h1>Login</h1>
+                    <form action="/login" method="POST">
+                    <div class="input">
+                        <label for="email">Email:</label>
+                        <input type="text" name="email" id="email">
+                    </div>
+                    <div class="input">
+                        <label for="password">Password:</label>
+                        <input type="password" name="password" id="password">
+                    </div>
+                    <input class="submit" type="submit" value="Login" id="btn-1">
+                        {% with messages = get_flashed_messages(category_filter=['login']) %}
+                            {% if messages %}
+                            <div>
+                                {% for message in messages %}
+                                    <p class="validation">{{message}}</p>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        {% endwith %}
+                    </form>
+                </div>
+            </div>
+        </div>    
     </body>
 </html>
