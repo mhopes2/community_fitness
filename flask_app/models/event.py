@@ -21,26 +21,27 @@ class Event:
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
         self.user_id = data['user_id']
-        self.user = None
+        self.users = None
         self.users_who_joined_event = []
         
 
 
     @classmethod
     def get_all_events(cls):
-        query = "SELECT * FROM events;"
+        query = "SELECT * FROM events JOIN users on users.id = events.users_id;"
         results = connectToMySQL(db).query_db(query)
         print(results)
         events = []
         for row in results:
-            events.append( cls(row))
+            event = cls(row)
+            event.users = user.User(row)
+            events.append(event)
         print(events)
         return events
 
-
     @classmethod
     def get_event(cls, data):
-        query = "SELECT * FROM events LEFT JOIN users on user_id = users.id where events.id = %(id)s;"
+        query = "SELECT * FROM events WHERE events.id = %(event_id)s;"
         results = connectToMySQL(db).query_db(query, data)
         return cls(results[0])
 
@@ -72,7 +73,7 @@ class Event:
 
     @classmethod
     def del_event(cls, data):
-        query = "DELETE from events WHERE id = %(id)s;"
+        query = "DELETE FROM events WHERE event_id = %(event_id)s;"
         result = connectToMySQL(db).query_db(query, data)
         return result
 
@@ -128,9 +129,6 @@ class Event:
             flash("Num should be greater than 0","eventadd")
             is_valid = False
         if (event['street']) == "":
-            flash("Input make,  must be at least 3 characters.","eventadd")
-            is_valid = False
-        if (event['apt']) == "":
             flash("Input make,  must be at least 3 characters.","eventadd")
             is_valid = False
         if (event['city']) == "":

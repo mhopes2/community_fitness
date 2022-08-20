@@ -25,11 +25,33 @@
                 <label for="end_time">End time: {{event.end_time}}</label><br>
                 <label for="num_of_peope">Num of people: {{event.num_of_pple}}</label><br>
                 <label>Location: {{event.street}} {{event.apt}} {{event.city}} {{event.state}} {{event.zip}}</label><br>
-                <label for="user_id">Posted By:{{event.user.last_name}}</label>
-                <div id="button">
-                    <input type="submit" value="Join" id="linkbtn">
-                </div>
+                <label for="user_id">Posted By:{{event.users.first_name}} {{event.users.last_name}}</label>
+                {% if session['user_id'] != user.users_signedup_event %}
+                    <div id="button">
+                        <input type="submit" value="Join" id="linkbtn">
+                    </div>
+                {% endif %}
             </form>
         </div>
+        <div class="map">
+            <div class="block maps">
+                <div class="content">
+                    <div class="map_canvas">
+                        <div class="infotext">
+                            <div class="location">{{event.title}}</div>
+                            <div class="address">{{event.street}} {{event.apt}}</div>
+                            <div class="city">{{event.city}}</div>
+                            <div class="state">{{event.state}}</div>
+                            <div class="zip">{{event.zip}}</div>
+                            <div class="country">US</div>
+                            <div class="zoom">13</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAOeuGyGjezcUDtR6rt86mkZkHKNsY99_0" type="text/javascript"></script>
+        <script async defer src="/static/js/script.js"></script>
     </body>
 </html>

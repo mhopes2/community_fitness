@@ -4,83 +4,90 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style5.css') }}">
     <title>Dashboard</title>
 </head>
 <body>
     <div>
-        <div>
-            <h1>Welcome {{user.first_name}}</h1>
-            <a href="/success/{{ user.id }}">Account</a>|
-            <a href="/logout">Logout</a>
-        </div>
-        <div class="left-col">
-            <div>
-                <h3>Events</h3>
-                <table><thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Date</th>
-                        <th>#</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                    {% for event in events %}
-                    <tr>
-                        {%if event.user_id != session.user_id%}
-                        <td>{{event.title}}</td>
-                        <td>{{event.date.strftime('%m-%d-%Y')}}</td>
-                        <td><span>Spots Left!!</span></td>
-                        <td><a href="/view/event/{{event.id}}">View</a></td>
-                        {% endif %}
-                    </tr>
-                    {% endfor %}
-                </table>
-                <button><a href="/add_event">Create Event</a></button>
-            </div>
-            <div>
-                <h3>Messages</h3>
-                <p>{{messages|length}} messages (unread)</p>
-                <table>
-                    {% for message in messages %}
-                    <tr>{{ message.message }}</tr>
-                    <tr>- <a href="/delete/message/{"></a><img src="img/deleteicon.png" alt="trashbin"></tr>
-                    {% endfor %}
-                </table>
-                <button><a href="/add_message">+ New Message</a></button>
+        <div class="navbar">
+            <h1 class="welcome">Welcome {{user.first_name}}</h1>
+            <div class="navlink">
+                <a href="/success/{{ user.id }}" class="link">Account</a>|
+                <a href="/logout" class="link">Logout</a>
             </div>
         </div>
-        <div>
-            <div>
-                <h2>My Schedule</h2>
-                <table>
-                    <thead>
+        <h1>Dashboard</h1>
+        <div class="mainPage">
+            <div class="left-col">
+                <div class="eventbox">
+                    <h3>Events</h3>
+                    <table><thead>
                         <tr>
-                            <th>Name</th>
+                            <th>Title</th>
                             <th>Date</th>
-                            <th>Location</th>
+                            <th>#</th>
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {% for event in user.users_signedup_event%}
+                        {% for event in events %}
                         <tr>
-                            <td>{{ event.title }}</td>
-                            <td>{{ event.date }}</td>
-                            <td>{{ event.street }} {{ event.city }}, {{ event.state }} {{ event.zip }}</td>
-                            <td>{{event.user_id}}</td>
-                            <td>
-                                <a href="/view/event/{{event.id}}">View |</a>
-                                {%if event.user_id == session["user_id"]%}
-                                <a href="#">edit</a>
-                                <a href="/cancel_event/{{event.id}}">delete</a>
-                                {%endif%}
-                                <a href="/Cancel">Cancel</a>
-                            </td>
+                            {%if event.user_id != session.user_id%}
+                            <td>{{event.title}}</td>
+                            <td>{{event.date.strftime('%m-%d-%Y')}}</td>
+                            <td><span>Spots Left!!</span></td>
+                            <td><a href="/view/event/{{event.id}}">View</a></td>
+                            {% endif %}
                         </tr>
                         {% endfor %}
-                    </tbody>
-                </table>
+                    </table><br>
+                    <button><a href="/add_event">Create Event</a></button>
+                </div>
+                <div class="messagebox">
+                    <h3>Messages</h3>
+                    <p>{{messages|length}} messages (unread)</p>
+                    <table>
+                        {% for message in messages %}
+                        <tr>{{ message.message }}</tr>
+                        <tr>- <a href="/delete/message/{"></a><img src="img/deleteicon.png" alt="trashbin"></tr>
+                        {% endfor %}
+                    </table><br>
+                    <button><a href="/add_message">+ New Message</a></button>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <h2>My Schedule</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Event</th>
+                                <th>Date</th>
+                                <th>Location</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for event in user.users_signedup_event %}
+                            <tr>
+                                <td>{{ event.title }}</td>
+                                <td>{{ event.date }}</td>
+                                <td>{{ event.street }} {{ event.city }}, {{ event.state }} {{ event.zip }}</td>
+                                <td>{{event.user_id}}</td>
+                                <td id="route">
+                                    <a href="/view/event/{{event.id}}" id="route">View</a> |
+                                    {% if event.user_id == session['user_id'] %}
+                                        <a href="/event/edit/{{event.id}}" id="route">Edit</a> |
+                                        <a href="/event/delete/{{event.id}}" id="route">Delete</a>
+                                    {% endif %}
+                                    {% if event.user_id != session['user_id'] %}
+                                        <a href="/cancel_event/{{event.id}}" class="route">Cancel</a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

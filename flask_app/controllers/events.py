@@ -48,24 +48,27 @@ def save_event():
     return redirect('/dashboard')
 
 
-
-@app.route('/event/edit/<int:user_id>')
-def edit_event(user_id):
+@app.route('/event/edit/<int:event_id>')
+def edit_event(event_id):
     if 'user_id' not in session:
         return redirect('/logout')
+    event_data = {
+        "event_id": event_id
+    }
 
-    data = {
-        "id": user_id
+    user_data = {
+        "id": session['user_id']
     }
     
-    return render_template("editevent.html",one_event=Event.get_event(data))
+    return render_template("editevent.html", event=Event.get_event(event_data), user = User.get_by_id(user_data))
 
 @app.route('/event/update/<int:event_id>', methods=['POST'])   
-def update_event():
+def update_event(event_id):
     if not Event.validate_event(request.form):
         return redirect(f'/event/edit/{request.form["id"]}')
 
     data = {
+        "event_id": event_id,
         "name": request.form['name'],
         "date": request.form['date'],
         "time": request.form['time'],
@@ -104,10 +107,7 @@ def view_event(event_id):
 def del_event(event_id):
     if 'user_id' not in session:
         return redirect('/logout')
-    data = {
-        'id': event_id
-    }
-    Event.del_event(data)
+    Event.del_event({'event_id':event_id})
     return redirect('/dashboard')
 
 @app.route('/cancel_event/<int:event_id>')
