@@ -38,9 +38,15 @@ def save_event():
         "user_id": session["user_id"]
     }
     print(data)
-    events = Event.save(data)
-    print(events)
+    events_id = Event.save(data)
+    data_dict = {
+        "event_id":events_id,
+        "user_id": session["user_id"]
+    }
+    Event.attending_event(data_dict)
+    print(events_id)
     return redirect('/dashboard')
+
 
 
 @app.route('/event/edit/<int:user_id>')
@@ -93,6 +99,7 @@ def view_event(event_id):
     print(user)
     return render_template('join_event.html', event = event ,user = user )
 
+
 @app.route('/event/delete/<int:event_id>')
 def del_event(event_id):
     if 'user_id' not in session:
@@ -101,6 +108,18 @@ def del_event(event_id):
         'id': event_id
     }
     Event.del_event(data)
+    return redirect('/dashboard')
+
+@app.route('/cancel_event/<int:event_id>')
+def unjoin(event_id):
+    if 'user_id' not in session:
+        return redirect('/logout')
+    data = {
+        'user_id': session['user_id'],
+        'event_id': event_id
+    }
+    Event.unjoin_event(data)
+    print(data)
     return redirect('/dashboard')
 
 @app.route('/join/event', methods =["POST"])

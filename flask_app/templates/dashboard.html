@@ -17,13 +17,22 @@
         <div class="left-col">
             <div>
                 <h3>Events</h3>
-                <table>
+                <table><thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Date</th>
+                        <th>#</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
                     {% for event in events %}
                     <tr>
-                        <a href="/view/event/{{ event.id }}">{event.title}</a>
-                    </tr>
-                    <tr>
-                        <p># spots left</p>
+                        {%if event.user_id != session.user_id%}
+                        <td>{{event.title}}</td>
+                        <td>{{event.date.strftime('%m-%d-%Y')}}</td>
+                        <td><span>Spots Left!!</span></td>
+                        <td><a href="/view/event/{{event.id}}">View</a></td>
+                        {% endif %}
                     </tr>
                     {% endfor %}
                 </table>
@@ -59,7 +68,15 @@
                             <td>{{ event.title }}</td>
                             <td>{{ event.date }}</td>
                             <td>{{ event.street }} {{ event.city }}, {{ event.state }} {{ event.zip }}</td>
-                            <td><a href="/view/{{ event.id }}">View |</a><a href="/update"></a></td>
+                            <td>{{event.user_id}}</td>
+                            <td>
+                                <a href="/view/event/{{event.id}}">View |</a>
+                                {%if event.user_id == session["user_id"]%}
+                                <a href="#">edit</a>
+                                <a href="/cancel_event/{{event.id}}">delete</a>
+                                {%endif%}
+                                <a href="/Cancel">Cancel</a>
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>

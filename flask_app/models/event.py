@@ -42,7 +42,6 @@ class Event:
     def get_event(cls, data):
         query = "SELECT * FROM events LEFT JOIN users on user_id = users.id where events.id = %(id)s;"
         results = connectToMySQL(db).query_db(query, data)
-
         return cls(results[0])
 
     @classmethod
@@ -63,7 +62,7 @@ class Event:
     
     @classmethod
     def event_not_yet_joined(cls,data):
-        query = "SELECT * FROM events where events.user_id !=%(id)s;" 
+        query = "SELECT * FROM events WHERE events.id NOT IN (SELECT event_id FROM signedUp_event WHERE user_id =%(id)s );" 
         results = connectToMySQL(db).query_db(query, data)
         events = []
         for row in results:
@@ -74,6 +73,12 @@ class Event:
     @classmethod
     def del_event(cls, data):
         query = "DELETE from events WHERE id = %(id)s;"
+        result = connectToMySQL(db).query_db(query, data)
+        return result
+
+    @classmethod
+    def unjoin_event(cls,data):
+        query = "DELETE FROM signedUp_event WHERE event_id =%(event_id)s AND user_id = %(user_id)s"
         result = connectToMySQL(db).query_db(query, data)
         return result
 

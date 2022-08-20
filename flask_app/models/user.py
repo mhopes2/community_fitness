@@ -111,7 +111,7 @@ class User:
 
     @classmethod
     def get_by_id(cls,data):
-        query = "SELECT * FROM users WHERE id = %(user_id)s;"
+        query = "SELECT * FROM users WHERE id = %(id)s;"
         results = connectToMySQL(db).query_db(query,data)
         print(results)
         return cls(results[0])
@@ -145,7 +145,7 @@ class User:
                 "zip": row['zip'],
                 "created_at": row['events.created_at'],
                 "updated_at": row['events.updated_at'],
-                "user_id": row["user_id"]
+                "user_id": row["events.user_id"]
             }
             user.users_signedup_event.append(event.Event(event_data))
             print(user)
