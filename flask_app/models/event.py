@@ -1,6 +1,6 @@
 from flask import flash
 from flask_app.config.mysqlconnection import connectToMySQL
-from flask_app.models.user import User
+from flask_app.models import user
 
 db = "eventmanager"
 
@@ -18,12 +18,12 @@ class Event:
         self.city = data['city']
         self.state = data['state']
         self.zip = data['zip']
-        self.description = data['description']
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
         self.user_id = data['user_id']
         self.user = None
-        self.users_signedup_event = []
+        self.users_who_joined_event = []
+        
 
 
     @classmethod
@@ -100,7 +100,7 @@ class Event:
                     'created_at' : row_from_db['users.created_at'],
                     "updated_at" : row_from_db["users.updated_at"]
                 }
-                event.users = (User(user_data))
+                event.users = (user.User(user_data))
             return event
         return False
 

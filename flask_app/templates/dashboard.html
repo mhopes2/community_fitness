@@ -54,9 +54,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for event in events %}
+                        {% for event in user.users_signedup_event%}
                         <tr>
-                            <td>{{ event.name }}</td>
+                            <td>{{ event.title }}</td>
                             <td>{{ event.date }}</td>
                             <td>{{ event.street }} {{ event.city }}, {{ event.state }} {{ event.zip }}</td>
                             <td><a href="/view/{{ event.id }}">View |</a><a href="/update"></a></td>
