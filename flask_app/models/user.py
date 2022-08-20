@@ -1,7 +1,9 @@
+from pprint import pprint
 from flask import session,flash
 from flask_app.config.mysqlconnection import connectToMySQL
 import re 
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
+from flask_app.models import event
 
 db = "eventmanager"
 
@@ -20,6 +22,7 @@ class User:
         self.uzip = data['uzip']
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
+        self.users_signedup_event = []
 
     @staticmethod
     def validate_register(user):
@@ -108,7 +111,42 @@ class User:
 
     @classmethod
     def get_by_id(cls,data):
-        query = "SELECT * FROM users WHERE id = %(user_id)s;"
+        query = "SELECT * FROM users WHERE id = %(id)s;"
         results = connectToMySQL(db).query_db(query,data)
         print(results)
         return cls(results[0])
+
+    @classmethod
+    def get_joined_events(cls,data):
+        query = """SELECT * FROM users 
+        LEFT JOIN signedUp_event ON users.id = signedUp_event.user_id 
+        LEFT JOIN events ON events.id = signedUp_event.event_id 
+        WHERE users.id = %(id)s;"""
+        results = connectToMySQL(db).query_db(query,data)
+        user = cls(results[0])
+        print(user)
+        for row in results:
+            pprint(row,sort_dicts=False)
+            #if there are no events signed up for
+            if row['events.id'] == None:
+                break
+            event_data = {
+                "id": row['events.id'],
+                "title": row['title'],
+                "description": row['description'],
+                "date": row['date'],
+                "start_time": row['start_time'],
+                "end_time": row['end_time'],
+                "num_of_pple": row['num_of_pple'],
+                "street": row['street'],
+                "apt": row['apt'],
+                "city": row['city'],
+                "state": row["state"],
+                "zip": row['zip'],
+                "created_at": row['events.created_at'],
+                "updated_at": row['events.updated_at'],
+                "user_id": row["events.user_id"]
+            }
+            user.users_signedup_event.append(event.Event(event_data))
+            print(user)
+        return user
