@@ -60,30 +60,30 @@ def edit_event(event_id):
         "id": session['user_id']
     }
     
-    return render_template("editevent.html", event=Event.get_event(event_data), user = User.get_by_id(user_data))
+    return render_template("editEvent.html", event=Event.get_event(event_data), user = User.get_by_id(user_data))
 
 @app.route('/event/update/<int:event_id>', methods=['POST'])   
 def update_event(event_id):
+    if 'user_id' not in session:
+        return redirect('/logout')
     if not Event.validate_event(request.form):
-        return redirect(f'/event/edit/{request.form["id"]}')
-
+        return redirect(f'/event/edit/{event_id}')
     data = {
-        "event_id": event_id,
-        "name": request.form['name'],
-        "date": request.form['date'],
-        "time": request.form['time'],
-        "duration": request.form['duration'],
-        "spots": request.form['spots'],
-        "location": request.form['location'],
-        "street": request.form['street'],
-        "city": request.form['city'],
-        "state": request.form['state'],
-        "zip": request.form['zip'],
-        "description": request.form['description'],
+        "title": request.form["title"],
+        "description": request.form["description"],
+        "date": request.form["date"],
+        "start_time": request.form["start_time"],
+        "end_time": request.form["end_time"],
+        "num_of_pple": request.form["num_of_pple"],
+        "street": request.form["street"],
+        "apt": request.form["apt"],
+        "city": request.form["city"],
+        "state": request.form["state"],
+        "zip": request.form["zip"],
+        "event_id": event_id
     }
-
-    print(data)
     Event.update(data)
+    print(data)
     return redirect('/dashboard')
 
 @app.route('/view/event/<int:event_id>')
@@ -98,9 +98,10 @@ def view_event(event_id):
     }
     event = Event.get_event_with_users(event_data)
     user = User.get_by_id(user_data)
+    list_of_joined_events_users = Event.list_of_users_joined_event(event_data)
     print(event)
     print(user)
-    return render_template('join_event.html', event = event ,user = user )
+    return render_template('join_event.html', event = event ,user = user, userEventsList = list_of_joined_events_users)
 
 
 @app.route('/event/delete/<int:event_id>')

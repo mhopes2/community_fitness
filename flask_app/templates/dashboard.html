@@ -25,7 +25,8 @@
                         <tr>
                             <th>Title</th>
                             <th>Date</th>
-                            <th>#</th>
+                            <th>Start Time</th>
+                            <th>End Time</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -34,7 +35,8 @@
                             {%if event.user_id != session.user_id%}
                             <td>{{event.title}}</td>
                             <td>{{event.date.strftime('%m-%d-%Y')}}</td>
-                            <td><span>Spots Left!!</span></td>
+                            <td>{{event.start_time}}</td>
+                            <td>{{event.end_time}}</td>
                             <td><a href="/view/event/{{event.id}}">View</a></td>
                             {% endif %}
                         </tr>
@@ -72,7 +74,6 @@
                                 <td>{{ event.title }}</td>
                                 <td>{{ event.date }}</td>
                                 <td>{{ event.street }} {{ event.city }}, {{ event.state }} {{ event.zip }}</td>
-                                <td>{{event.user_id}}</td>
                                 <td id="route">
                                     <a href="/view/event/{{event.id}}" id="route">View</a> |
                                     {% if event.user_id == session['user_id'] %}
