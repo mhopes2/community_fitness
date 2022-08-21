@@ -53,7 +53,7 @@ class Event:
 
     @classmethod
     def update(cls, data):
-        query = "UPDATE events SET title=%(title)s, description=%(description)s, date=%(date)s, start_time=%(start_time)s, end_time=%(end_time)s, num_of_pple=%(num_of_pple)s, street=%(street)s,apt=%(apt)s, city=%(city)s, state=%(state)s, zip=%(zip)s WHERE id = %(id)s;"
+        query = "UPDATE events SET title=%(title)s, description=%(description)s, date=%(date)s, start_time=%(start_time)s, end_time=%(end_time)s, num_of_pple=%(num_of_pple)s, street=%(street)s,apt=%(apt)s, city=%(city)s, state=%(state)s, zip=%(zip)s WHERE id = %(event_id)s;"
         return connectToMySQL(db).query_db(query,data)
 
     @classmethod
@@ -73,7 +73,7 @@ class Event:
 
     @classmethod
     def del_event(cls, data):
-        query = "DELETE FROM events WHERE event_id = %(event_id)s;"
+        query = "DELETE FROM events WHERE id = %(event_id)s;"
         result = connectToMySQL(db).query_db(query, data)
         return result
 
@@ -82,6 +82,18 @@ class Event:
         query = "DELETE FROM signedUp_event WHERE event_id =%(event_id)s AND user_id = %(user_id)s"
         result = connectToMySQL(db).query_db(query, data)
         return result
+
+    @classmethod
+    def list_of_users_joined_event(cls,data):
+        query = "SELECT * FROM signedUp_event WHERE event_id =%(id)s;"
+        result = connectToMySQL(db).query_db(query, data)
+        list_of_users = []
+        if result :
+            for row in result:
+                list_of_users.append(row)
+        return list_of_users
+
+
 
     @classmethod
     def get_event_with_users( cls , data ):

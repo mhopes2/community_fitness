@@ -26,46 +26,46 @@
         {% endwith %}
         </div>
         <div id="wrapper">
-            <form action="'/event/edit/" method="POST">
+            <form action="/event/update/{{event.id}}" method="POST">
                 <label for="title">Event Title:</label>
-                <input type="text" name="name" class="input_tag"><br>
+                <input type="text" name="title" value="{{event.title}}" class="input_tag"><br>
                 <div id="text_area">
                     <label for="description">Description:</label>
-                    <textarea name="description" id="description" cols="30" rows="5"></textarea><br>
+                    <textarea name="description" id="description" cols="30" rows="5">{{event.description}}</textarea><br>
                 </div>
                 <label for="event_date">Event Date:</label>
-                <input type="date" name="date" id="date"><br>
+                <input type="date" name="date" value = "{{event.date}}"id="date"><br>
                 <label for="duration">Event Start Time:</label>
-                <input type="time" name="time" class="time"><br>
+                <input type="time" name="start_time" value="{{event.start_time}}" class="time"><br>
                 <label for="duration">Event End Time:</label>
-                <input type="time" name="duration" class="time"><br>
+                <input type="time" name="end_time" value="{{event.end_time}}" class="time"><br>
                 <div id="select_tag">
-                    <label for="number">Num of people attending</label>
-                    <select name="attendance" id="attendance">
-                        <option value="num">Select</option>
-                        <option value="num">1</option>
-                        <option value="num">2</option>
-                        <option value="num">3</option>
-                        <option value="num">4</option>
-                        <option value="num">5</option>
-                        <option value="num">6</option>
-                        <option value="num">7</option>
-                        <option value="num">8</option>
-                        <option value="num">9</option>
-                        <option value="num">10</option>
+                    <label for="num_of_pple">Num of people attending</label>
+                    <select name="num_of_pple" id="attendance">
+                        <option value="0">{{event.num_of_pple}}</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
                     </select>
                 </div>    
                 <div id="loc">   
                     <label for="location">Event Location:</label>
-                    <input type="text" name="street" class="input_tag"><br>
+                    <input type="text" name="street" value = "{{event.street}}"class="input_tag"><br>
                     <label for="apt">apt/unit/suite:</label>
-                    <input type="text" name="apt" class="input_tag3"><br>
+                    <input type="text" name="apt" value = "{{event.apt}}"class="input_tag3"><br>
                     <label for="city">City:</label>
-                    <input type="text" name="city" class="input_tag4"><br>
+                    <input type="text" name="city" value = "{{event.city}}"class="input_tag4"><br>
                     <label for="state">State:</label>
-                    <input type="text" name="state" class="input_tag1"><br>
+                    <input type="text" name="state" value = "{{event.state}}"class="input_tag1"><br>
                     <label for="zip">Zip code:</label>
-                    <input type="text" name="zip" class="input_tag2">
+                    <input type="text" name="zip" value = "{{event.zip}}"class="input_tag2">
                 </div> 
                 <div id="button">
                     <input type="submit" value="Submit" id="linkbtn">

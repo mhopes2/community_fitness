@@ -11,7 +11,7 @@
     <body>
         <div id="nav">
             <a href="/dashboard" class="topLinks">Home</a>
-            <a href="/success/" class="topLinks">Account</a>
+            <a href="/success/{{ user.id }}" class="topLinks">Account</a>
             <a href="/logout" class="rightLink">Logout</a>
         </div>
         <img src="{{ url_for('static', filename='/img/fitness.png') }}">
@@ -26,7 +26,7 @@
                 <label for="num_of_peope">Num of people: {{event.num_of_pple}}</label><br>
                 <label>Location: {{event.street}} {{event.apt}} {{event.city}} {{event.state}} {{event.zip}}</label><br>
                 <label for="user_id">Posted By:{{event.users.first_name}} {{event.users.last_name}}</label>
-                {% if session['user_id'] != user.users_signedup_event %}
+                {% if session["user_id"] not in userEventsList |map(attribute ="user_id")%}
                     <div id="button">
                         <input type="submit" value="Join" id="linkbtn">
                     </div>
