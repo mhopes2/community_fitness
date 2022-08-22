@@ -1,6 +1,6 @@
 from flask import flash
 from flask_app.config.mysqlconnection import connectToMySQL
-from flask_app.models.user import User
+from flask_app.models import user
 
 db = "eventmanager"
 
@@ -18,31 +18,31 @@ class Event:
         self.city = data['city']
         self.state = data['state']
         self.zip = data['zip']
-        self.description = data['description']
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
         self.user_id = data['user_id']
-        self.user = None
-        self.users_signedup_event = []
+        self.users = None
+        self.users_who_joined_event = []
+        
 
 
     @classmethod
     def get_all_events(cls):
-        query = "SELECT * FROM events;"
+        query = "SELECT * FROM events JOIN users on users.id = events.users_id;"
         results = connectToMySQL(db).query_db(query)
         print(results)
         events = []
         for row in results:
-            events.append( cls(row))
+            event = cls(row)
+            event.users = user.User(row)
+            events.append(event)
         print(events)
         return events
 
-
     @classmethod
     def get_event(cls, data):
-        query = "SELECT * FROM events LEFT JOIN users on user_id = users.id where events.id = %(id)s;"
+        query = "SELECT * FROM events WHERE events.id = %(event_id)s;"
         results = connectToMySQL(db).query_db(query, data)
-
         return cls(results[0])
 
     @classmethod
@@ -53,7 +53,7 @@ class Event:
 
     @classmethod
     def update(cls, data):
-        query = "UPDATE events SET title=%(title)s, description=%(description)s, date=%(date)s, start_time=%(start_time)s, end_time=%(end_time)s, num_of_pple=%(num_of_pple)s, street=%(street)s,apt=%(apt)s, city=%(city)s, state=%(state)s, zip=%(zip)s WHERE id = %(id)s;"
+        query = "UPDATE events SET title=%(title)s, description=%(description)s, date=%(date)s, start_time=%(start_time)s, end_time=%(end_time)s, num_of_pple=%(num_of_pple)s, street=%(street)s,apt=%(apt)s, city=%(city)s, state=%(state)s, zip=%(zip)s WHERE id = %(event_id)s;"
         return connectToMySQL(db).query_db(query,data)
 
     @classmethod
@@ -63,7 +63,7 @@ class Event:
     
     @classmethod
     def event_not_yet_joined(cls,data):
-        query = "SELECT * FROM events where events.user_id !=%(id)s;" 
+        query = "SELECT * FROM events WHERE events.id NOT IN (SELECT event_id FROM signedUp_event WHERE user_id =%(id)s );" 
         results = connectToMySQL(db).query_db(query, data)
         events = []
         for row in results:
@@ -73,9 +73,27 @@ class Event:
 
     @classmethod
     def del_event(cls, data):
-        query = "DELETE from events WHERE id = %(id)s;"
+        query = "DELETE FROM events WHERE id = %(event_id)s;"
         result = connectToMySQL(db).query_db(query, data)
         return result
+
+    @classmethod
+    def unjoin_event(cls,data):
+        query = "DELETE FROM signedUp_event WHERE event_id =%(event_id)s AND user_id = %(user_id)s"
+        result = connectToMySQL(db).query_db(query, data)
+        return result
+
+    @classmethod
+    def list_of_users_joined_event(cls,data):
+        query = "SELECT * FROM signedUp_event WHERE event_id =%(id)s;"
+        result = connectToMySQL(db).query_db(query, data)
+        list_of_users = []
+        if result :
+            for row in result:
+                list_of_users.append(row)
+        return list_of_users
+
+
 
     @classmethod
     def get_event_with_users( cls , data ):
@@ -100,7 +118,7 @@ class Event:
                     'created_at' : row_from_db['users.created_at'],
                     "updated_at" : row_from_db["users.updated_at"]
                 }
-                event.users = (User(user_data))
+                event.users = (user.User(user_data))
             return event
         return False
 
@@ -123,9 +141,6 @@ class Event:
             flash("Num should be greater than 0","eventadd")
             is_valid = False
         if (event['street']) == "":
-            flash("Input make,  must be at least 3 characters.","eventadd")
-            is_valid = False
-        if (event['apt']) == "":
             flash("Input make,  must be at least 3 characters.","eventadd")
             is_valid = False
         if (event['city']) == "":

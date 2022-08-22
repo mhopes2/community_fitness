@@ -17,11 +17,13 @@
         <div id="content">
             <h1>Title</h1>
             <form action="/show_event">
-                <p><label>Description</label></p>
-                <p><label>Date:</label></p>
-                <p><label>time: </label></p>
-                <p><label>Location: </label></p>
-                <p><label>Posted By:</label></p>
+                <label for="description">Description   {{event.description}}</label><br>
+                <label for="date">Date:   {{event.date.strftime('%m-%d-%Y')}}</label><br>
+                <label for="start_time">Start time: {{event.start_time}}</label><br>
+                <label for="end_time">End time: {{event.end_time}}</label><br>
+                <label for="num_of_peope">Num of people: {{event.num_of_pple}}</label><br>
+                <label>Location: {{event.street}} {{event.apt}} {{event.city}} {{event.state}} {{event.zip}}</label><br>
+                <label for="user_id">Posted By:{{event.user.last_name}}</label>
                 <div id="button">
                     <input type="submit" value="Cancel" id="linkbtn">
                 </div>

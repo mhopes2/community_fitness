@@ -1,0 +1,87 @@
+* {
+    margin: 0px auto;
+}
+
+body{
+    background-image: url('/static/img/fitness4.png');
+    background-size: 2000px 2000px;
+    background-repeat: no-repeat;
+}
+
+.welcome {
+    font-size: 50px;
+    margin-left: 20px;
+}
+
+h1, h2 {
+    color: white;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.navbar, .mainPage {
+    display: flex;
+    margin-top: 10px;
+}
+
+.navlink {
+    color: white;
+    margin-top: 30px;
+    margin-left: 500px;
+}
+
+.link {
+    padding: 0px 10px;
+}
+
+#route {
+    color: black;
+}
+
+.dashboard {
+    margin-top: 80px;
+}
+
+a:link, a:visited {
+    color: white;
+}
+
+a:hover {
+    color: gold;
+}
+
+table {
+    border-collapse: collapse;
+    background-color: white;
+}
+
+table, td, th {
+    border: 2px solid black;
+    padding: 10px;
+}
+
+th {
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif
+}
+
+#tbletxt {
+    color: black;
+    font-size: 15px;
+    text-align: center;
+    padding: 0px 5px;
+}
+
+button {
+    background-color: gold;
+}
+
+.left-col {
+    margin-top: 20px;
+}
+
+.eventbox, .messagebox {
+    background-color: white;
+    margin-top: 20px;
+    padding: 20px;
+    width: 300px;
+}

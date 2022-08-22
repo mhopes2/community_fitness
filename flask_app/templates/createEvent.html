@@ -11,7 +11,7 @@
     <div id="container">
         <div id="nav">
             <a href="/dashboard" class="topLinks">Home</a>
-            <a href="/success/" class="topLinks">Account</a>
+            <a href="/success/{{ user.id }}" class="topLinks">Account</a>
             <a href="/logout" class="rightLink">Logout</a>
         </div>
         <h1>Create Event</h1>
@@ -33,14 +33,14 @@
                     <label for="description">Description:</label>
                     <textarea name="description" id="description" cols="30" rows="5"></textarea><br>
                 </div>
-                <label for="event_date">Event Date:</label>
+                <label for="date">Event Date:</label>
                 <input type="date" name="date" id="date"><br>
-                <label for="duration">Event Start Time:</label>
+                <label for="start_time">Event Start Time:</label>
                 <input type="time" name="start_time" class="time"><br>
-                <label for="duration">Event End Time:</label>
+                <label for="end_time">Event End Time:</label>
                 <input type="time" name="end_time" class="time"><br>
                 <div id="select_tag">
-                    <label for="number">Num of people attending</label>
+                    <label for="num_of_pple"># of People Allowed:</label>
                     <select name="num_of_pple" id="attendance">
                         <option value="num_of_pple">Select</option>
                         <option value="1">1</option>
@@ -56,7 +56,7 @@
                     </select>
                 </div>    
                 <div id="loc">   
-                    <label for="location">Event Location:</label>
+                    <label for="street">Event Location:</label>
                     <input type="text" name="street" class="input_tag"><br>
                     <label for="apt">apt/unit/suite:</label>
                     <input type="text" name="apt" class="input_tag3"><br>

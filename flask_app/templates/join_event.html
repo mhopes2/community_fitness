@@ -11,7 +11,7 @@
     <body>
         <div id="nav">
             <a href="/dashboard" class="topLinks">Home</a>
-            <a href="/success/" class="topLinks">Account</a>
+            <a href="/success/{{ user.id }}" class="topLinks">Account</a>
             <a href="/logout" class="rightLink">Logout</a>
         </div>
         <img src="{{ url_for('static', filename='/img/fitness.png') }}">
@@ -19,17 +19,39 @@
             <h1>Title  {{event.title}}</h1>
             <form action="/join/event" method ="POST">
                 <input type="hidden" name="event_id" value="{{event.id}}">
-                <label for="description">Description   {{event.description}}</label>
-                <label for="date">Date:   {{event.date.strftime('%m-%d-%Y')}}</label>
-                <label for="start_time">Start time: {{event.start_time}}</label>
-                <label for="end_time">End time: {{event.end_time}}</label>
-                <label for="num_of_peope">Num of people: {{event.num_of_pple}}</label>
-                <label>Location: {{event.street}} {{event.apt}} {{event.city}} {{event.state}} {{event.zip}}</label>
-                <label for="user_id">Posted By:{{event.user.last_name}}</label>
-                <div id="button">
-                    <input type="submit" value="Join" id="linkbtn">
-                </div>
+                <label for="description">Description   {{event.description}}</label><br>
+                <label for="date">Date:   {{event.date.strftime('%m-%d-%Y')}}</label><br>
+                <label for="start_time">Start time: {{event.start_time}}</label><br>
+                <label for="end_time">End time: {{event.end_time}}</label><br>
+                <label for="num_of_peope">Num of people: {{event.num_of_pple}}</label><br>
+                <label>Location: {{event.street}} {{event.apt}} {{event.city}} {{event.state}} {{event.zip}}</label><br>
+                <label for="user_id">Posted By:{{event.users.first_name}} {{event.users.last_name}}</label>
+                {% if session["user_id"] not in userEventsList |map(attribute ="user_id")%}
+                    <div id="button">
+                        <input type="submit" value="Join" id="linkbtn">
+                    </div>
+                {% endif %}
             </form>
         </div>
+        <div class="map">
+            <div class="block maps">
+                <div class="content">
+                    <div class="map_canvas">
+                        <div class="infotext">
+                            <div class="location">{{event.title}}</div>
+                            <div class="address">{{event.street}} {{event.apt}}</div>
+                            <div class="city">{{event.city}}</div>
+                            <div class="state">{{event.state}}</div>
+                            <div class="zip">{{event.zip}}</div>
+                            <div class="country">US</div>
+                            <div class="zoom">13</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAOeuGyGjezcUDtR6rt86mkZkHKNsY99_0" type="text/javascript"></script>
+        <script async defer src="/static/js/script.js"></script>
     </body>
 </html>

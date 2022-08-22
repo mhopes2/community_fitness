@@ -1,5 +1,5 @@
-from flask_app import app
 from flask import render_template,redirect,request,session,flash
+from flask_app import app
 from flask_app.models.user import User
 from flask_app.models.event import Event
 from flask_app.models.message import Message
@@ -38,12 +38,12 @@ def dashboard():
     user_data = {
         'id': session['user_id']
     }
-    return render_template('dashboard.html', user = User.get_by_id(user_data), events = Event.get_all_events(), messages = Message.get_all(user_data))
+    return render_template('dashboard.html', events = Event.event_not_yet_joined(user_data),user = User.get_joined_events(user_data), messages = Message.get_all(user_data))
 
-@app.route('/update',methods=['POST'])
-def update():
-
-    data ={
+@app.route('/update/<int:user_id>',methods=['POST'])
+def update(user_id):
+    data ={ 
+        "user_id": user_id,
         "first_name": request.form['first_name'],
         "last_name": request.form['last_name'],
         "email": request.form['email'],
@@ -52,15 +52,12 @@ def update():
         "uapt": request.form['uapt'],
         "ucity": request.form['ucity'],
         "ustate": request.form['ustate'],
-        "uzip": request.form['uzip'],
+        "uzip": request.form['uzip']
     }
     
-    user_id = User.update(data)
-    print(user_id)
-
-    session['id'] = user_id
-    session['first_name'] = request.form['first_name']
-    return redirect('/dashboard')
+    User.update(data)
+    user_session = session['user_id']
+    return redirect ('/success/'+ str(user_session))
 
 @app.route('/login',methods=['POST'])
 def login():
