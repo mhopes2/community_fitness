@@ -42,7 +42,6 @@ def dashboard():
 
 @app.route('/update/<int:user_id>',methods=['POST'])
 def update(user_id):
-
     data ={ 
         "user_id": user_id,
         "first_name": request.form['first_name'],

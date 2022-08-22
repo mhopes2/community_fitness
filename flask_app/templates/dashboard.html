@@ -9,15 +9,14 @@
 </head>
 <body>
     <div>
-        <div class="navbar">
+         <div class="navbar">
             <h1 class="welcome">Welcome {{user.first_name}}</h1>
             <div class="navlink">
                 <a href="/success/{{ user.id }}" class="link">Account</a>|
                 <a href="/logout" class="link">Logout</a>
             </div>
-        </div>
-        <h1>Dashboard</h1>
-        <div class="mainPage">
+            <h1>Dashboard</h1>
+         <div class="mainPage">
             <div class="left-col">
                 <div class="eventbox">
                     <h3>Events</h3>
@@ -44,17 +43,19 @@
                     </table><br>
                     <button><a href="/add_event">Create Event</a></button>
                 </div>
-                <div class="messagebox">
-                    <h3>Messages</h3>
-                    <p>{{messages|length}} messages (unread)</p>
-                    <table>
-                        {% for message in messages %}
-                        <tr>{{ message.message }}</tr>
-                        <tr>- <a href="/delete/message/{"></a><img src="img/deleteicon.png" alt="trashbin"></tr>
-                        {% endfor %}
-                    </table><br>
-                    <button><a href="/add_message">+ New Message</a></button>
-                </div>
+                <div>
+                <h3>Messages</h3>
+                <p>{{messages|length}} messages (unread)</p>
+                <table>
+                    {% for message in messages %}
+                    <tr>{{ message.message }}</tr>
+                    <tr>- <a href="/view/message/{{message.id}}">View</a></tr>
+                    <tr>- <a href="/delete/message/{{message.id}}">Delete</a><img src="img/deleteicon.png" alt="trashbin"></tr>
+                    {% endfor %}
+                </table>
+                <button><a href="/view/messages/{{session.id}}">View all Messages</a></button>
+                <button><a href="/add_message">+ New Message</a></button>
+            </div>
             </div>
             <div>
                 <div>
