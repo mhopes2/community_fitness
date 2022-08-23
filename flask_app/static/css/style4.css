@@ -1,3 +1,4 @@
+
 #nav{
     display: flex;
     align-items: center;
@@ -6,19 +7,17 @@
     gap: 20px;
 }
 
-#content{
-    margin-left: 300px;
-}
 a{
     text-decoration: none;
-    color: rgb(237, 237, 242);
+}
+
+#content {
     font-size: 20px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 #linkbtn{
-    background-color: #406941;
     border: none;
-    color: white;
     padding: 15px 32px;
     text-align: center;
     font-size: 16px;
@@ -33,10 +32,7 @@ img{
     margin-right: auto;
     
 }
-body{
-    background-color: grey;
-    
-}
+
 #account_body{
     background-color: #e1dee5;
     margin-left: 100px;
@@ -52,16 +48,33 @@ body{
 
 .a_tag{
     text-decoration: none;
-    color: rgb(89, 89, 120);
     font-size: 20px;
 }
 
+h1 {
+    text-align: center;
+    font-size: 80px;
+}
+
 .map {
-    width: 100%;
-    height: 500px;
+    width: 40%;
+    height: 300px;
     overflow: hidden;
     position: relative;
+    margin-bottom: 100px;
+    margin-top: 70px;
 }
 .map_canvas {
     position: static !important;
+}
+
+.main {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+#content {
+    border: 2px solid black;
+    padding: 30px;
 }

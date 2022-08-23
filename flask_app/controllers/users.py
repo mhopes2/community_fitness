@@ -38,7 +38,7 @@ def dashboard():
     user_data = {
         'id': session['user_id']
     }
-    return render_template('dashboard.html', events = Event.event_not_yet_joined(user_data),user = User.get_joined_events(user_data), messages = Message.get_all(user_data))
+    return render_template('dashboard.html', events = Event.event_not_yet_joined(user_data),user = User.get_joined_events(user_data), messages = Message.get_user_messages(user_data))
 
 @app.route('/update/<int:user_id>',methods=['POST'])
 def update(user_id):

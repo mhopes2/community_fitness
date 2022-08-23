@@ -11,7 +11,7 @@
         <div>
             <h1>All Messages</h1>
             <a href="/dashboard">Home</a>
-            <a href="/success">Account</a>
+            <a href="/success/{{session['user_id']}}">Account</a>
             <a href="/logout">Logout</a>
         </div>
         <div>
@@ -24,17 +24,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for message in all_messages %}
+                    {% for message in messages %}
                         <tr>
                             <td>{{ message.from_name }}</td>
                             <td>{{ message.message }}</td>
-                            <td><a href="/view/message/{{message.id}}">View</a> | <a href="/delete/message/{{message.id}}">Delete</a></td>
+                            <td><a href="/reply/message/{{ message.id }}">Reply</a> | <a href="/delete/message/{{ message.id }}">Delete</a></td>
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
-        <a href="/add_message">+ Create New Message</a>
+        <a href="/create_message">+ Create New Message</a>
     </div>
 </body>
 </html>
