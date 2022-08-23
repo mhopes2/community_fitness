@@ -14,24 +14,18 @@
             <a href="/success">Account</a> |
             <a href="/logout">Logout</a>
         </div>
-        <div><form action="/save/message" method="POST">
-            <input type="hidden" name="from_id" value={{session.user_id}}>
-            <input type="hidden" name="from_name" value={{session.first_name}}>
-                <label for="to_id">Message to:</label>
-                <select name = to_id>
-                    {% for u in users %}
-                        {% if u.id != session.user_id %}
-                            <option value={{u.id}}>{{u.first_name}} {{u.last_name}}</option>
-                        {% endif %}
-                        // <input type="hidden" name="to_id" value={{u.id}}>
-                        // <input type="hidden" name="to_name" value={{u.first_name}}>
-                    {% endfor %}
-                </select>
+        <div>
+
+            <form action="/save/message" method="POST">
+                <input type="hidden" name="from_id" value={{session.user_id}}>
+                <input type="hidden" name="from_name" value={{session.first_name}}>
+                <label for = "email">Enter email:</label>
+                <input type="email" name="email" value="Enter email address">
                 <label for="message">Message:</label>
                 <textarea class="form-control" name="message" id="message" cols="30" rows="3"></textarea>
                 <input type="submit" value="Send Message">
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </body>
 </html>
