@@ -54,4 +54,14 @@ class Message:
         if len(message['message']) < 2:
             flash("You will need a long message")
             is_valid = False
+        #if user['id'] == session.user_id:
+            #flash("Don't send a message to yourself dork")
+            #is_valid = False
         return is_valid
+
+    @classmethod
+    def get_name(cls,data):
+        query = "SELECT first_name FROM users where users.id = %(id)s;"
+        results = connectToMySQL(db).query_db(query,data)
+        print(results)
+        return cls(results[0])
