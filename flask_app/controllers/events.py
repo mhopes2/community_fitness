@@ -99,7 +99,6 @@ def view_event(event_id):
     event = Event.get_event_with_users(event_data)
     user = User.get_by_id(user_data)
     list_of_joined_events_users = Event.list_of_users_joined_event(event_data)
-    print(event)
     print(user)
     return render_template('join_event.html', event = event ,user = user, userEventsList = list_of_joined_events_users)
 
@@ -125,6 +124,8 @@ def unjoin(event_id):
 
 @app.route('/join/event', methods =["POST"])
 def join_event():
+    if 'user_id' not in session:
+        return redirect('/logout')
     data = {
         "user_id": session['user_id'],
         "event_id": request.form['event_id']
