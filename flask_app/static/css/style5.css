@@ -32,6 +32,7 @@ h1, h2 {
 
 .link {
     padding: 0px 10px;
+    color: white;
 }
 
 #route {
@@ -42,12 +43,13 @@ h1, h2 {
     margin-top: 80px;
 }
 
-a:link, a:visited {
-    color: white;
-}
 
 a:hover {
     color: gold;
+}
+
+.boxlink:hover {
+    color: red;
 }
 
 table {
@@ -79,9 +81,20 @@ button {
     margin-top: 20px;
 }
 
-.eventbox, .messagebox {
+.right-col {
+    margin-top: 35px;
+}
+
+.eventbox, .messagebox{
     background-color: white;
     margin-top: 20px;
     padding: 20px;
-    width: 300px;
+}
+
+th {
+    padding: 0px 35px;
+}
+
+td {
+    text-align: center;
 }

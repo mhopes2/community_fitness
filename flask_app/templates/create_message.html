@@ -4,27 +4,42 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/style6.css') }}">
     <title>Create New Message</title>
 </head>
 <body>
-    <div>
-        <div>
+    <div class="background">
+        <div id="navbar">
             <h1>Create New Message</h1>
-            <a href="/dashboard">Home</a> |
-            <a href="/success">Account</a> |
-            <a href="/logout">Logout</a>
+            <div class="nav2">
+                <a href="/dashboard">Home</a> |
+                <a href="/success/{{session['user_id']}}">Account</a> |
+                <a href="/logout">Logout</a>
+            </div>
         </div>
-        <div>
-
-            <form action="/save/message" method="POST">
-                <input type="hidden" name="from_id" value={{session.user_id}}>
-                <input type="hidden" name="from_name" value={{session.first_name}}>
-                <label for = "email">Enter email:</label>
-                <input type="email" name="email" value="Enter email address">
-                <label for="message">Message:</label>
-                <textarea class="form-control" name="message" id="message" cols="30" rows="3"></textarea>
-                <input type="submit" value="Send Message">
-            </form>
+        <div class="main">
+            <div class="sendMessage">
+                <form action="/save/message" method="POST">
+                    <input type="hidden" name="sender_id" value="{{session['user_id']}}">
+                    <div class="receiver">
+                        <label for="receiver_id">Message to:</label>
+                        <select name = receiver_id>
+                            {% for u in users %}
+                                {% if u.id != session['user_id'] %}
+                                    <option value={{u.id}}>{{u.first_name}} {{u.last_name}}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select><br><br>
+                    </div>
+                    <div class="messagebox">
+                        <label for="message">Message:</label>
+                        <div>
+                            <textarea class="form-control" name="message" id="message" cols="30" rows="7"></textarea><br>
+                            <input type="submit" class= "btn-1" value="Send Message">
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </body>

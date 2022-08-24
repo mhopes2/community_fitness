@@ -57,6 +57,10 @@ body{
     
 }
 
+a:link, a:visited {
+    color: black;
+}
+
 #wrapper2{
     background-image: url('/static/img/fitness3.png');
     background-size: 2000px 1000px;

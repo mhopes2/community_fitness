@@ -9,15 +9,16 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='/css/style4.css') }}">
     </head>
     <body>
-        <div class="oneline">
+        <div id="navbar">
             <h1 style="margin: 0px;">Account Information</h1>
-            <div>
-                <a href="/dashboard">Home</a>
+            <div class="nav2">
+                <a href="/dashboard">Home</a> |
                 <a href="/logout">Logout</a>
             </div>
         </div>
-        <div class="box">
+        <div class="main">
             <form action="/update/{{ user.id }}" method="POST">
+                <h2>User Information</h2>
                 <div>
                     <label for="first_name">First Name:</label>
                     <input type="text" name="first_name" id="first_name" value="{{user.first_name}}">
@@ -34,13 +35,13 @@
                     <label for="dob">Date of Birth:</label>
                     <input type="date" name="dob" id="dob" value = "{{user.dob}}">
                 </div>
-                <p>Address:</p>
+                <h2><ul>Address</ul></h2>
                 <div>
                     <label for="ustreet">Street:</label>
                     <input type="text" name="ustreet" id="ustreet" value="{{user.ustreet}}">
                 </div>
                 <div>
-                    <label for="uapt"></label>
+                    <label for="uapt">Apt/Suite/Floor:</label>
                     <input type="text" name="uapt" id="uapt" value = "{{user.uapt}}">
                 </div>
                 <div>
