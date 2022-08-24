@@ -1,9 +1,7 @@
-from pprint import pprint
 from flask import session,flash
 from flask_app.config.mysqlconnection import connectToMySQL
 import re 
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
-from flask_app.models import event
 
 db = "eventmanager"
 
@@ -22,7 +20,6 @@ class User:
         self.uzip = data['uzip']
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
-        self.users_signedup_event = []
 
     @staticmethod
     def validate_register(user):
