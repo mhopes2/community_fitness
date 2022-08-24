@@ -76,7 +76,7 @@ def login():
 
 @app.route('/success/<int:user_id>')
 def edit(user_id):
-    data = {
+    data = { 
         "id": user_id
     }
     #user = User.get_by_id({'user_id': user_id})
