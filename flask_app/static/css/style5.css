@@ -48,6 +48,10 @@ a:hover {
     color: gold;
 }
 
+.boxlink:hover {
+    color: red;
+}
+
 table {
     border-collapse: collapse;
     background-color: white;
@@ -75,6 +79,10 @@ button {
 
 .left-col {
     margin-top: 20px;
+}
+
+.right-col {
+    margin-top: 35px;
 }
 
 .eventbox, .messagebox{

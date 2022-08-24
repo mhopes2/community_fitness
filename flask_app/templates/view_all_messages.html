@@ -4,17 +4,20 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/style4.css') }}">
     <title>View All Messages</title>
 </head>
 <body>
     <div>
-        <div>
+        <div id="navbar">
             <h1>All Messages</h1>
-            <a href="/dashboard">Home</a>
-            <a href="/success/{{session['user_id']}}">Account</a>
-            <a href="/logout">Logout</a>
+            <div class="nav2">
+                <a href="/dashboard">Home</a> |
+                <a href="/success/{{session['user_id']}}">Account</a> |
+                <a href="/logout">Logout</a>
+            </div>
         </div>
-        <div>
+        <div class="main">
             <table>
                 <thead>
                     <tr>
@@ -34,7 +37,7 @@
                 </tbody>
             </table>
         </div>
-        <a href="/create_message">+ Create New Message</a>
+        <button class="create"><a href="/create_message">+ Create New Message</a></button>
     </div>
 </body>
 </html>

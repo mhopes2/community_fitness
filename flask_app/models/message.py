@@ -36,13 +36,10 @@ class Message:
     @classmethod
     def reply_message(cls, data):
         query = """SELECT CONCAT_WS(" ",users.first_name,users.last_name) as from_name, CONCAT_WS(" ",users2.first_name,users2.last_name) as to_name, messages.* FROM users 
-        LEFT JOIN messages ON users.id = messages.receiver_id 
-        LEFT JOIN users as users2 ON users2.id = messages.sender_id WHERE users2.id = %(id)s;"""
+        LEFT JOIN messages ON users.id = messages.sender_id 
+        LEFT JOIN users as users2 ON users2.id = messages.receiver_id WHERE messages.id = %(id)s;"""
         results = connectToMySQL(db).query_db(query, data)
-        messages = []
-        for message in results:
-                messages.append( cls(message) )
-        return messages
+        return cls(results[0])
 
     @classmethod
     def save(cls, data):

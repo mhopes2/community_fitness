@@ -52,9 +52,8 @@ def reply_message(message_id):
         'id': message_id
     }
     
-    message = Message.get_message(data)
-    print("$$$$$$")
-    print("$$$$$")
+    message = Message.reply_message(data)
+
     return render_template('reply_message.html', message = message)
 
 @app.route('/delete/message/<int:message_id>')
@@ -63,4 +62,4 @@ def del_message(message_id):
         'id': message_id
     }
     Message.delete(data)
-    return redirect('/dashboard')
+    return redirect('/view/all_messages')

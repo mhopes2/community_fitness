@@ -1,15 +1,18 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Community Fitness App Page</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/css.css') }}">
-    </head>
-    <body>
-        <div class="oneline"><h1 style="margin: 0px; margin-right: 300px;">Edit {{one_car.model}}</h1><a href="/success/"><input class="submit" type="submit" value="Dashboard"></a><a href="/logout"><input class="submit" type="submit" value="Logout"></a>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/style2.css') }}">
+    <title>Edit Event</title>
+</head>
+<body>
+    <div id="container">
+        <div id="nav">
+            <a href="/dashboard" class="topLinks">Home</a>
+            <a href="/success/{{ user.id }}" class="topLinks">Account</a>
+            <a href="/logout" class="rightLink">Logout</a>
         </div>
         <h1>Edit Event</h1>
         <div class="col-1">
@@ -25,21 +28,21 @@
         <div id="wrapper">
             <form action="/event/update/{{event.id}}" method="POST">
                 <label for="title">Event Title:</label>
-                <input type="text" name="title" class="input_tag" value="{{event.title}}"><br>
+                <input type="text" name="title" value="{{event.title}}" class="input_tag"><br>
                 <div id="text_area">
                     <label for="description">Description:</label>
                     <textarea name="description" id="description" cols="30" rows="5">{{event.description}}</textarea><br>
                 </div>
-                <label for="date">Event Date:</label>
-                <input type="date" name="date" id="date" value="{{event.date}}"><br>
-                <label for="start_time">Event Start Time:</label>
-                <input type="time" name="start_time" class="time" value="{{event.start_time}}"><br>
-                <label for="end_time">Event End Time:</label>
-                <input type="time" name="end_time" class="time" value="{{event.end_time}}"><br>
+                <label for="event_date">Event Date:</label>
+                <input type="date" name="date" value = "{{event.date}}"id="date"><br>
+                <label for="duration">Event Start Time:</label>
+                <input type="time" name="start_time" value="{{event.start_time}}" class="time"><br>
+                <label for="duration">Event End Time:</label>
+                <input type="time" name="end_time" value="{{event.end_time}}" class="time"><br>
                 <div id="select_tag">
                     <label for="num_of_pple">Num of people attending</label>
                     <select name="num_of_pple" id="attendance">
-                        <option value="num_of_pple">{{event.num_of_pple}}</option>
+                        <option value="0">{{event.num_of_pple}}</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -51,18 +54,18 @@
                         <option value="9">9</option>
                         <option value="10">10</option>
                     </select>
-                </div>
-                <div id="loc">
-                    <label for="street">Event Location:</label>
-                    <input type="text" name="street" class="input_tag" value="{{event.street}}"><br>
+                </div>    
+                <div id="loc">   
+                    <label for="location">Event Location:</label>
+                    <input type="text" name="street" value = "{{event.street}}"class="input_tag"><br>
                     <label for="apt">apt/unit/suite:</label>
-                    <input type="text" name="apt" class="input_tag3" value="{{event.apt}}"><br>
+                    <input type="text" name="apt" value = "{{event.apt}}"class="input_tag3"><br>
                     <label for="city">City:</label>
-                    <input type="text" name="city" class="input_tag4" value="{{event.city}}"><br>
+                    <input type="text" name="city" value = "{{event.city}}"class="input_tag4"><br>
                     <label for="state">State:</label>
-                    <input type="text" name="state" class="input_tag1" value="{{event.state}}"><br>
+                    <input type="text" name="state" value = "{{event.state}}"class="input_tag1"><br>
                     <label for="zip">Zip code:</label>
-                    <input type="text" name="zip" class="input_tag2" value="{{event.zip}}">
+                    <input type="text" name="zip" value = "{{event.zip}}"class="input_tag2">
                 </div> 
                 <div id="button">
                     <input type="submit" value="Submit" id="linkbtn">
