@@ -38,12 +38,12 @@ def dashboard():
     user_data = {
         'id': session['user_id']
     }
-    return render_template('dashboard.html', events = Event.event_not_yet_joined(user_data),user = User.get_joined_events(user_data), messages = Message.get_all(user_data))
+    return render_template('dashboard.html', events = Event.event_not_yet_joined(user_data),user = User.get_joined_events(user_data), messages = Message.get_user_messages(user_data))
 
 @app.route('/update/<int:user_id>',methods=['POST'])
 def update(user_id):
     data ={ 
-        "user_id": user_id,
+        "id": user_id,
         "first_name": request.form['first_name'],
         "last_name": request.form['last_name'],
         "email": request.form['email'],
@@ -76,7 +76,7 @@ def login():
 
 @app.route('/success/<int:user_id>')
 def edit(user_id):
-    data = {
+    data = { 
         "id": user_id
     }
     #user = User.get_by_id({'user_id': user_id})

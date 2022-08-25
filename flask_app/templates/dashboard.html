@@ -9,17 +9,19 @@
 </head>
 <body>
     <div>
-         <div class="navbar">
+        <div class="navbar">
             <h1 class="welcome">Welcome {{user.first_name}}</h1>
             <div class="navlink">
                 <a href="/success/{{ user.id }}" class="link">Account</a>|
                 <a href="/logout" class="link">Logout</a>
             </div>
-            <h1>Dashboard</h1>
-         <div class="mainPage">
+        </div>
+        <h1>Dashboard</h1>
+        <div class="mainPage">
             <div class="left-col">
+                <h2>Upcoming Events</h2>
                 <div class="eventbox">
-                    <h3>Events</h3>
+                    <h3>Events</h3><br>
                     <table><thead>
                         <tr>
                             <th>Title</th>
@@ -36,60 +38,51 @@
                             <td>{{event.date.strftime('%m-%d-%Y')}}</td>
                             <td>{{event.start_time}}</td>
                             <td>{{event.end_time}}</td>
-                            <td><a href="/view/event/{{event.id}}">View</a></td>
+                            <td><a href="/view/event/{{event.id}}" class="boxlink">View</a></td>
                             {% endif %}
                         </tr>
                         {% endfor %}
                     </table><br>
-                    <button><a href="/add_event">Create Event</a></button>
+                    <button><a href="/add_event" class="boxlink">Create Event</a></button>
                 </div>
-                <div>
-                <h3>Messages</h3>
-                <p>{{messages|length}} messages (unread)</p>
+                <div class="messagebox">
+                    <h3>Messages</h3><br>
+                    <p>{{messages|length}} message(s)</p><br>
+                    <button><a href="/view/all_messages" class="boxlink">View All Messages</a></button>
+                    <button><a href="/create_message" class="boxlink">+ New Message</a></button>
+                </div>
+            </div>
+            <div class="right-col">
+                <h2>My Schedule</h2>
                 <table>
-                    {% for message in messages %}
-                    <tr>{{ message.message }}</tr>
-                    <tr>- <a href="/view/message/{{message.id}}">View</a></tr>
-                    <tr>- <a href="/delete/message/{{message.id}}">Delete</a><img src="img/deleteicon.png" alt="trashbin"></tr>
-                    {% endfor %}
+                    <thead>
+                        <tr>
+                            <th>Event</th>
+                            <th>Date</th>
+                            <th>Location</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for event in user.users_signedup_event %}
+                        <tr>
+                            <td>{{ event.title }}</td>
+                            <td>{{ event.date }}</td>
+                            <td>{{ event.street }} {{ event.city }}, {{ event.state }} {{ event.zip }}</td>
+                            <td id="route">
+                                <a href="/view/event/{{event.id}}" id="route">View</a> |
+                                {% if event.user_id == session['user_id'] %}
+                                    <a href="/event/edit/{{event.id}}" id="route">Edit</a> |
+                                    <a href="/event/delete/{{event.id}}" id="route">Delete</a>
+                                {% endif %}
+                                {% if event.user_id != session['user_id'] %}
+                                    <a href="/cancel_event/{{event.id}}" class="route">Cancel</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
                 </table>
-                <button><a href="/view/messages/{{session.id}}">View all Messages</a></button>
-                <button><a href="/add_message">+ New Message</a></button>
-            </div>
-            </div>
-            <div>
-                <div>
-                    <h2>My Schedule</h2>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Event</th>
-                                <th>Date</th>
-                                <th>Location</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for event in user.users_signedup_event %}
-                            <tr>
-                                <td>{{ event.title }}</td>
-                                <td>{{ event.date }}</td>
-                                <td>{{ event.street }} {{ event.city }}, {{ event.state }} {{ event.zip }}</td>
-                                <td id="route">
-                                    <a href="/view/event/{{event.id}}" id="route">View</a> |
-                                    {% if event.user_id == session['user_id'] %}
-                                        <a href="/event/edit/{{event.id}}" id="route">Edit</a> |
-                                        <a href="/event/delete/{{event.id}}" id="route">Delete</a>
-                                    {% endif %}
-                                    {% if event.user_id != session['user_id'] %}
-                                        <a href="/cancel_event/{{event.id}}" class="route">Cancel</a>
-                                    {% endif %}
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
             </div>
         </div>
     </div>

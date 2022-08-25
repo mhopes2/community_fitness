@@ -1,0 +1,49 @@
+* {
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}
+
+body {
+    background-color: ivory;
+    align-items: center;
+}
+
+#navbar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.nav2{
+    display: flex;
+    margin-left: 300px;
+    justify-content: flex-end;
+    gap: 20px;
+}
+
+.background {
+    background-image: url('/static/img/messagebox.png');
+    background-size: 500px 500px;
+    background-repeat: no-repeat;
+    background-position: 400px 0px;
+    text-align: center;
+}
+
+.sendMessage {
+    height: 500px;
+    margin-top: 20px;
+}
+
+.messagebox {
+    margin-top: 50px;
+    display: flex;
+    margin-left: 500px;
+}
+
+#message {
+    margin-left: 10px;
+}
+
+.btn-1 {
+    background-color: gold;
+}
+

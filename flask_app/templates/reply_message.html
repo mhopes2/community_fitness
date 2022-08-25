@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/style6.css') }}">
+    <title>Reply Message</title>
+</head>
+<body>
+    <div class="background">
+        <div id="navbar">
+            <h1>Reply Message</h1>
+            <div class="nav2">
+                <a href="/dashboard">Home</a>
+                <a href="/success/{{session['user_id']}}">Account</a>
+                <a href="logout">Logout</a>
+            </div>
+        </div>
+        <div class="main">
+            <div class="sendMessage">
+                <form action="/save/message" method="POST">
+                    <input type="hidden" name="receiver_id" value={{message.sender_id}}>
+                    <input type="hidden" name="sender_id" value="{{session['user_id']}}">
+                    <div class="messagebox">
+                        <h3>Reply:</h3>
+                    </div>
+                    <div>
+                        <textarea class="form-control" name="message" id="message" cols="30" rows="7"></textarea>
+                        <input type="submit" value="Send" class="btn-1">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
