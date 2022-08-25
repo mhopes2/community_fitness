@@ -3,6 +3,7 @@ from flask_app import app
 from flask import render_template,redirect,request,session,flash
 from flask_app.models.user import User
 from flask_app.models.event import Event
+import os
 import pprint
 
 @app.route('/add_event')
@@ -96,11 +97,12 @@ def view_event(event_id):
     event_data = {
         'id': event_id
     }
+    key = (os.getenv("API_KEY"))
     event = Event.get_event_with_users(event_data)
     user = User.get_by_id(user_data)
     list_of_joined_events_users = Event.list_of_users_joined_event(event_data)
     print(user)
-    return render_template('join_event.html', event = event ,user = user, userEventsList = list_of_joined_events_users)
+    return render_template('join_event.html', event = event ,user = user, userEventsList = list_of_joined_events_users, key = key)
 
 
 @app.route('/event/delete/<int:event_id>')
